@@ -6,9 +6,9 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 /*
     For 循环结构的使用
     1. 语法结构
-    for(初始化； 布尔表达式； 更新){
-        // 代码语句
-    }
+        for(初始化； 布尔表达式； 更新){
+            // 代码语句
+        }
 
     执行过程：初始化 - 布尔表达式 - 代码语句 - 更新 - 布尔表达式 - 代码语句 - 更新
  */
