@@ -1,4 +1,4 @@
-package Project;
+package lesson04.Project;
 
 public class FamilyAccount {
     public static void main(String[] args){
