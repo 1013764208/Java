@@ -1,6 +1,5 @@
 package lesson05.Demo;
 
-
 // 练习：使用二维数组打印10行杨辉三角
 public class YangHuiTest {
     public static void main(String[] args) {

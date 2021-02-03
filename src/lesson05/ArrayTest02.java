@@ -1,7 +1,5 @@
 package lesson05;
 
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 /*
     算法考查：求数值型数组中元素的最大值、最小值、平均值、总和等
 

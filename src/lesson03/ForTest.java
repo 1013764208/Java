@@ -1,8 +1,5 @@
 package lesson03;
 
-
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 /*
     For 循环结构的使用
     1. 语法结构

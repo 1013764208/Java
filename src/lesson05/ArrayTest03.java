@@ -1,7 +1,5 @@
 package lesson05;
 
-import java.sql.SQLOutput;
-
 /*
     练习：使用简单数组
     1. 创建一个名为ArrayTest的类，在main()方法中声明array1和array2两个变量，int[]类型
