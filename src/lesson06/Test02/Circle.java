@@ -1,4 +1,4 @@
-package lesson06.Text02;
+package lesson06.Test02;
 /*
     练习：设计circle 圆的面积
  */

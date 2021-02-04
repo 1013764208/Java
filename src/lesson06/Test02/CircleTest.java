@@ -1,4 +1,4 @@
-package lesson06.Text02;
+package lesson06.Test02;
 
 public class CircleTest {
     public static void main(String[] args) {

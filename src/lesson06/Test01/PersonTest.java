@@ -1,4 +1,4 @@
-package lesson06.Text01;
+package lesson06.Test01;
 /*
     练习：要求
     1. 创建Person类的对象，设置该对象的name、age和sex 属性，调用study 方法
