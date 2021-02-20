@@ -28,19 +28,19 @@ class A extends B{}
 
 
  A:子类、派生类、subclass
- 
+
  B:父类、超类、基类、superclass
 
 
 
 #### 3. 子类继承父类以后有哪些不同？
 
-#####3.1 体现：一旦子类A继承父类B以后，子类A中就获取了父类B中声明的所有的属性和方法。
+##### 3.1 体现：一旦子类A继承父类B以后，子类A中就获取了父类B中声明的所有的属性和方法。
 
    特别的，父类中声明为private的属性或方法，子类继承父类以后，仍然认为获取了父类中私的结构。只因为封装性的影响，使得子类不能直接调用父类的结构而已。
 
-#####3.2 子类继承父类以后，还可以声明自己特有的属性或方法：实现功能的拓展。
-     
+##### 3.2 子类继承父类以后，还可以声明自己特有的属性或方法：实现功能的拓展。
+
  子类和父类的关系，不同于子集和集合的关系。
  extends：延展、扩展
 
@@ -48,19 +48,25 @@ class A extends B{}
 
 #### 4. Java中继承性的说明
 
-1. 一个类可以被多个子类继承。
-2.  Java中类的单继承性：一个类只能有一个父类
-3. 子父类是相对的概念。
-4. 子类直接继承的父类，称为：直接父类。间接继承的父类称为：间接父类
-5. 子类继承父类以后，就获取了直接父类以及所间接父类中声明的属性和方法
+1.一个类可以被多个子类继承。
+
+2.Java中类的单继承性：一个类只能有一个父类
+
+3.子父类是相对的概念。
+
+4.子类直接继承的父类，称为：直接父类。间接继承的父类称为：间接父类
+
+5.子类继承父类以后，就获取了直接父类以及所间接父类中声明的属性和方法
 
 ![image-20210215103211173](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210215103211173.png)
 
 #### 5. java.lang.Object类的理解
 
-1. 如果我们没显式的声明一个类的父类的话，则此类继承于java.lang.Object类
-2. 所的java类（除java.lang.Object类之外都直接或间接的继承于java.lang.Object类
-3. 意味着，所的java类具有java.lang.Object类声明的功能。
+1.如果我们没显式的声明一个类的父类的话，则此类继承于java.lang.Object类
+
+2.所的java类（除java.lang.Object类之外都直接或间接的继承于java.lang.Object类
+
+3.意味着，所的java类具有java.lang.Object类声明的功能。
 
 
 
@@ -124,7 +130,7 @@ class A extends B{}
 
 
 
-### 5.3 super
+### 5.3 关键字 super
 
 #### 1. super 关键字可以理解为：父类的
 
@@ -167,7 +173,7 @@ class A extends B{}
 
 <img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210215172059526.png" alt="image-20210215172059526" style="zoom: 67%;" />
 
-### 5.4 多态
+### 5.4 面向对象的特征三：多态
 
 #### 1.多态性的理解：可以理解为一个事物的多种形态。
 
@@ -190,6 +196,7 @@ Object obj = new Date();
 #### 5.多态性的应用举例：
 
 举例一：
+
 public void func(Animal animal){//Animal animal = new Dog();
 	animal.eat();
 	animal.shout();
@@ -547,7 +554,7 @@ class Circle{
 
 
 
-### 6.1.1 单例模式
+#### 6.1.1 单例模式
 
 #### 1.设计模式的说明
 
@@ -694,7 +701,7 @@ man.earnMoney();
 
 
 
-### 6.3 类的结构之四代码块
+### 6.3 类的结构： 代码块
 
 类的成员之四：代码块(初始化块)（重要性较属性、方法、构造器差一些）
 
@@ -729,7 +736,7 @@ man.earnMoney();
 对应的练习：LeafTest.java / Son.java
 由父及子，静态先行。
 
-### 6.3.1  执行顺序
+#### 6.3.1  执行顺序
 
 ①默认初始化
 
@@ -747,7 +754,7 @@ man.earnMoney();
 
 
 
-### 7. final：最终的
+### 6.4  关键字 final
 
 #### 1.可以用来修饰：类、方法、变量
 
@@ -769,6 +776,395 @@ final修饰局部变量：
 
 尤其是使用final修饰形参时，表明此形参是一个常量。当我们调用此方法时，给常量形参赋一个实参。一旦赋值以后，就只能在方法体内使用此形参，但不能进行重新赋值。
 
-
-
 static final 用来修饰属性：全局常量
+
+
+
+
+
+
+
+### 6.5 关键字 abstract
+
+#### 1.可以用来修饰：类、方法
+
+#### 2.具体的：
+
+abstract修饰类：抽象类
+
+#####  此类不能实例化
+
+ 抽象类中一定有构造器，便于子类实例化时调用（涉及：子类对象实例化的全过程）
+ 开发中，都会提供抽象类的子类，让子类对象实例化，完成相关的操作 --->抽象的使用前提：继承性
+
+##### abstract修饰方法：抽象方法
+
+抽象方法只方法的声明，没方法体
+包含抽象方法的类，一定是一个抽象类。反之，抽象类中可以没有抽象方法的。
+若子类重写了父类中的所的抽象方法后，此子类方可实例化
+若子类没重写父类中的所的抽象方法，则此子类也是一个抽象类，需要使用abstract修饰
+
+#### 3.注意点：
+
+1.abstract不能用来修饰：属性、构造器等结构
+
+2.abstract不能用来修饰私方法、静态方法、final的方法、final的类
+
+#### 4.abstract的应用举例：
+
+举例一：
+
+![image-20210220161805465](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210220161805465.png)
+
+举例二：
+ ````
+abstract class GeometricObject{
+public abstract double findArea();
+}
+class Circle extends GeometricObject{
+private double radius;
+public double findArea(){
+		return 3.14 * radius * radius;
+};
+}
+ ````
+
+举例三：
+IO流中设计到的抽象类：InputStream/OutputStream / Reader /Writer。在其内部
+定义了抽象的read()、write()方法。
+
+
+
+
+
+### 6.6 关键字 interface
+
+#### 1.使用说明：
+
+1.1接口使用interface来定义
+
+1.2Java中，接口和类是并列的两个结构
+
+1.3如何定义接口：定义接口中的成员
+
+
+
+1.3.1 JDK7及以前：只能定义全局常量和抽象方法
+
+全局常量：public static final的.但是书写时，可以省略不写
+
+抽象方法：public abstract的
+
+
+
+1.3.2 JDK8：除了定义全局常量和抽象方法之外，还可以定义静态方法、默认方法
+
+接口中不能定义构造器的！意味着接口不可以实例化
+
+Java开发中，接口通过让类去实现(implements)的方式来使用.
+
+
+
+如果实现类覆盖了接口中的所抽象方法，则此实现类就可以实例化
+
+如果实现类没覆盖接口中所的抽象方法，则此实现类仍为一个抽象类
+
+
+
+Java类可以实现多个接口   --->弥补了Java单继承性的局限性
+
+格式：class AA extends BB implements CC,DD,EE
+
+
+
+接口与接口之间可以继承，而且可以多继承
+
+接口的具体使用，体现多态性
+
+接口，实际上可以看做是一种规范
+
+##### 2.举例：
+
+![image-20210220164720342](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210220164720342.png)
+
+````
+class Computer{
+	public void transferData(USB usb){
+	//USB usb = new Flash();
+		usb.start();
+		
+		System.out.println("具体传输数据的细节");
+		
+		usb.stop();
+	}	
+}
+````
+
+
+
+````
+interface USB{
+	//常量：定义了长、宽、最大最小的传输速度等
+	
+
+	void start();
+	
+	void stop();
+
+}
+
+class Flash implements USB{
+
+	@Override
+	public void start() {
+		System.out.println("U盘开启工作");
+	}
+	
+	@Override
+	public void stop() {
+		System.out.println("U盘结束工作");
+	}
+
+}
+
+class Printer implements USB{
+	@Override
+	public void start() {
+		System.out.println("打印机开启工作");
+	}
+
+	@Override
+	public void stop() {
+		System.out.println("打印机结束工作");
+	}
+
+}
+````
+
+#####  体会：
+
+1.接口使用上也满足多态性
+
+2.接口，实际上就是定义了一种规范
+
+3.开发中，体会面向接口编程！	
+
+#### 3.体会面向接口编程的思想
+
+![image-20210220164820724](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210220164820724.png)
+
+面向接口编程：我们在应用程序中，调用的结构都是JDBC中定义的接口，不会出现具体某一个数据库厂商的API。
+
+#### 4. Java8中关于接口的新规范
+
+//知识点1：接口中定义的静态方法，只能通过接口来调用。
+
+//知识点2：通过实现类的对象，可以调用接口中的默认方法。
+//如果实现类重写了接口中的默认方法，调用时，仍然调用的是重写以后的方法
+
+//知识点3：如果子类(或实现类)继承的父类和实现的接口中声明了同名同参数的默认方法，那么子类在没重写此方法的情况下，默认调用的是父类中的同名同参数的方法。-->类优先原则
+//知识点4：如果实现类实现了多个接口，而这多个接口中定义了同名同参数的默认方法，
+//那么在实现类没重写此方法的情况下，报错。-->接口冲突。
+//这就需要我们必须在实现类中重写此方法
+//知识点5：如何在子类(或实现类)的方法中调用父类、接口中被重写的方法
+
+````
+	public void myMethod(){
+		method3();//调用自己定义的重写的方法
+		super.method3();//调用的是父类中声明的
+		//调用接口中的默认方法
+		CompareA.super.method3();
+		CompareB.super.method3();
+	}
+````
+
+
+
+#### 5.面试题：
+
+抽象类和接口的异同？
+相同点：不能实例化；都可以包含抽象方法的。
+不同点：
+1）把抽象类和接口(java7,java8,java9)的定义、内部结构解释说明
+2）类：单继承性    接口：多继承
+      类与接口：多实现
+
+
+
+#### 6.6.1 代理模式
+
+##### 1.解决的问题
+
+代理模式是Java开发中使用较多的一种设计模式。代理设计就是为其他对象提供一种代理以控制对这个对象的访问。 
+
+##### 2.举例
+
+```
+interface NetWork{
+public void browse();
+}
+
+//被代理类
+class Server implements NetWork{
+
+	@Override
+	public void browse() {
+		System.out.println("真实的服务器访问网络");
+	}
+
+}
+//代理类
+class ProxyServer implements NetWork{
+	
+
+	private NetWork work;
+	
+	public ProxyServer(NetWork work){
+		this.work = work;
+	}
+
+
+	public void check(){
+		System.out.println("联网之前的检查工作");
+	}
+	
+	@Override
+	public void browse() {
+		check();
+		
+		work.browse();
+		
+	}
+
+}
+```
+
+
+
+
+
+##### 3.应用场景
+
+![image-20210220165506183](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210220165506183.png)
+
+
+
+#### 6.6.2 工厂模式
+
+##### 1.解决的问题
+
+实现了创建者与调用者的分离，即将创建对象的具体过程屏蔽隔离起来，达到提高灵活性的目的。
+
+##### 2.具体模式
+
+简单工厂模式：用来生产同一等级结构中的任意产品。（对于增加新的产品，需要修改已有代码）
+工厂方法模式：用来生产同一等级结构中的固定产品。（支持增加任意产品)
+抽象工厂模式：用来生产不同产品族的全部产品。（对于增加新的产品，无能为力；支持增加产品族)
+
+
+
+
+
+
+
+### 6.7 类的结构：内部类
+
+内部类：类的第五个成员
+
+#### 1.定义：Java中允许将一个类A声明在另一个类B中，则类A就是内部类，类B称为外部类.
+
+#### 2.内部类的分类：
+
+成员内部类（静态、非静态 ） vs 局部内部类(方法内、代码块内、构造器内)
+
+#### 3.成员内部类的理解：
+
+一方面，作为外部类的成员：
+调用外部类的结构
+可以被static修饰
+可以被4种不同的权限修饰
+
+另一方面，作为一个类：
+ 类内可以定义属性、方法、构造器等
+ 可以被final修饰，表示此类不能被继承。言外之意，不使用final，就可以被继承
+ 可以被abstract修饰
+
+#### 4.成员内部类：
+
+##### 4.1如何创建成员内部类的对象？(静态的，非静态的)
+
+````
+//创建静态的Dog内部类的实例(静态的成员内部类):
+Person.Dog dog = new Person.Dog();
+
+//创建非静态的Bird内部类的实例(非静态的成员内部类):
+//Person.Bird bird = new Person.Bird();//错误的
+Person p = new Person();
+Person.Bird bird = p.new Bird();
+````
+
+##### 4.2如何在成员内部类中调用外部类的结构？
+
+````
+class Person{
+	String name = "小明";
+public void eat(){
+}
+//非静态成员内部类
+	class Bird{
+		String name = "杜鹃";
+		public void display(String name){
+			System.out.println(name);//方法的形参
+			System.out.println(this.name);//内部类的属性
+			System.out.println(Person.this.name);//外部类的属性
+		//Person.this.eat();
+		}
+	}
+}
+````
+
+#### 5.局部内部类的使用：
+
+````
+//返回一个实现了Comparable接口的类的对象
+	public Comparable getComparable(){
+		
+		//创建一个实现了Comparable接口的类:局部内部类
+		//方式一：
+//		class MyComparable implements Comparable{
+//
+//			@Override
+//			public int compareTo(Object o) {
+//				return 0;
+//			}
+//			
+//		}
+//		
+//		return new MyComparable();
+		
+		//方式二：
+		return new Comparable(){
+
+			@Override
+			public int compareTo(Object o) {
+				return 0;
+			}	
+		};		
+	}
+````
+
+##### 注意点：
+
+在局部内部类的方法中（比如：show如果调用局部内部类所声明的方法(比如：method)中的局部变量(比如：num)的话,要求此局部变量声明为final的。
+
+jdk 7及之前版本：要求此局部变量显式的声明为final的
+jdk 8及之后的版本：可以省略final的声明
+
+##### 总结：
+
+成员内部类和局部内部类，在编译以后，都会生成字节码文件。
+格式：成员内部类：外部类$内部类名.class
+            局部内部类：外部类$数字 内部类名.class
+
+
+
