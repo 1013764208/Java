@@ -1,4 +1,4 @@
-package Test01;
+package com.atguigu.team.domain;
 
 import javafx.beans.binding.ObjectExpression;
 import org.junit.jupiter.api.Test;

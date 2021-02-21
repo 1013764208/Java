@@ -1,4 +1,4 @@
-package Test01;
+package com.atguigu.team.domain;
 
 public class Block {
     public static void main(String[] args) {

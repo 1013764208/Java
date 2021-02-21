@@ -1,4 +1,4 @@
-package Test01;
+package com.atguigu.team.domain;
 /*
     类的成员之四：代码块（或初始化块）
 

@@ -1,4 +1,4 @@
-package Test01;
+package com.atguigu.team.domain;
 
 import org.junit.Test;
 

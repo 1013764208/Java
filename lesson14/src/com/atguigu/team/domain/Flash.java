@@ -1,4 +1,4 @@
-package Test01;
+package com.atguigu.team.domain;
 
 class Flash implements USB {
 

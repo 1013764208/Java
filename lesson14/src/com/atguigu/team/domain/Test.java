@@ -1,4 +1,4 @@
-package Test01;
+package com.atguigu.team.domain;
 
 /*
     接口的使用   / 体会
