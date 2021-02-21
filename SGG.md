@@ -4,7 +4,417 @@
 
 ## 3. 数组
 
+### 3.1 数组概述
+
+#### 1.数组的理解：
+
+数组(Array)，是多个相同类型数据一定顺序排列的集合，并使用一个名字命名，并通过编号的方式对这些数据进行统一管理
+
+
+
+#### 2.数组相关的概念：
+
+数组名
+
+元素
+
+角标、下标、索引
+
+数组的长度：元素的个数
+
+
+
+#### 3.数组的特点：
+
+1.数组是序排列的
+
+2.数组属于引用数据类型的变量。数组的元素，既可以是基本数据类型，也可以是引用数据类型
+
+3.创建数组对象会在内存中开辟一整块连续的空间
+
+4.数组的长度一旦确定，就不能修改。
+
+
+
+#### 4.数组的分类：
+
+① 照维数：一维数组、二维数组、。。。
+
+② 照数组元素的类型：基本数据类型元素的数组、引用数据类型元素的数组
+
+##### 数据结构：
+
+1.数据与数据之间的逻辑关系：集合、一对一、一对多、多对多
+2.数据的存储结构：
+线性表：顺序表（比如：数组）、链表、栈、队列
+树形结构：二叉树
+图形结构：
+
+
+
+##### 算法：
+
+排序算法：
+搜索算法：
+
+
+
+### 3.2 一维数组
+
+#### 1.一维数组的声明与初始化
+
+```
+
+	int num;//声明
+	num = 10;//初始化
+	int id = 1001;//声明 + 初始化
+		
+正确的方式：
+	int[] ids;//声明
+	//1.1 静态初始化:数组的初始化和数组元素的赋值操作同时进行
+	ids = new int[]{1001,1002,1003,1004};
+	//1.2动态初始化:数组的初始化和数组元素的赋值操作分开进行
+	String[] names = new String[5];
+	
+	int[] arr4 = {1,2,3,4,5};//类型推断
+
+错误的方式：
+//		int[] arr1 = new int[];
+//		int[5] arr2 = new int[5];
+//		int[] arr3 = new int[3]{1,2,3};
+```
+
+
+
+
+
+#### 2.一维数组元素的引用：通过角标的方式调用。
+
+```
+	//数组的角标（或索引从0开始的，到数组的长度-1结束。
+		names[0] = "王铭";
+		names[1] = "王赫";
+		names[2] = "张学良";
+		names[3] = "孙居龙";
+		names[4] = "王宏志";//charAt(0)
+```
+
+
+
+​	
+
+#### 3.数组的属性：length
+
+```
+System.out.println(names.length);//5
+System.out.println(ids.length);
+```
+
+
+
+##### 说明：数组一旦初始化，其长度就是确定的。arr.length
+
+#####              数组长度一旦确定，就不可修改。
+
+
+
+#### 4.一维数组的遍历
+
+```
+for(int i = 0;i < names.length;i++){
+	System.out.println(names[i]);
+}
+```
+
+
+
+#### 5.一维数组元素的默认初始化值
+
+数组元素是整型：0
+
+数组元素是浮点型：0.0
+
+数组元素是char型：0或'\u0000'，而非'0'
+
+数组元素是boolean型：false
+
+数组元素是引用数据类型：null
+
+
+
+
+
+#### 6.一维数组的内存解析
+
+![image-20210221150515142](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221150515142.png)
+
+
+
+
+
+### 3.2 二维数组
+
+#### 1.如何理解二维数组？
+
+数组属于引用数据类型
+数组的元素也可以是引用数据类型
+一个一维数组A的元素如果还是一个一维数组类型的，则，此数组A称为二维数组
+
+#### 2.二维数组的声明与初始化
+
+正确的方式：
+
+	int[] arr = new int[]{1,2,3};//一维数组
+		//静态初始化
+		int[][] arr1 = new int[][]{{1,2,3},{4,5},{6,7,8}};
+		//动态初始化1
+		String[][] arr2 = new String[3][2];
+		//动态初始化2
+		String[][] arr3 = new String[3][];
+	//也是正确的写法：
+		int[] arr4[] = new int[][]{{1,2,3},{4,5,9,10},{6,7,8}};
+		int[] arr5[] = {{1,2,3},{4,5},{6,7,8}};//类型推断
+错误的方式：
+
+```
+//		String[][] arr4 = new String[][4];
+//		String[4][3] arr5 = new String[][];
+//		int[][] arr6 = new int[4][3]{{1,2,3},{4,5},{6,7,8}};
+```
+
+
+
+#### 3.如何调用二维数组元素:
+
+```
+System.out.println(arr1[0][1]);//2
+System.out.println(arr2[1][1]);//null
+arr3[1] = new String[4];
+System.out.println(arr3[1][0]);
+System.out.println(arr3[0]);//
+```
+
+#### 4.二维数组的属性：
+
+```
+System.out.println(arr4.length);//3
+System.out.println(arr4[0].length);//3
+System.out.println(arr4[1].length);//4
+```
+
+#### 5.遍历二维数组元素
+
+```
+	for(int i = 0;i < arr4.length;i++){
+		for(int j = 0;j < arr4[i].length;j++){
+			System.out.print(arr4[i][j] + "  ");
+		}
+		System.out.println();
+	}		
+```
+
+
+
+#### 6.二维数组元素的默认初始化值
+
+![image-20210221151019103](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221151019103.png)
+
+#### 7.二维数组的内存结构
+
+![image-20210221151027419](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221151027419.png)
+
+
+
+
+
+### 3.3 数组的常见算法
+
+#### 1.数组的创建与元素赋值：
+
+杨辉三角（二维数组）、回形数（二维数组）、6个数，
+
+1-30之间随机生成且不重复
+
+#### 2.针对于数值型的数组：
+
+最大值、最小值、总和、平均数等
+
+#### 3.数组的赋值与复制
+
+```
+int[] array1,array2;
+array1 = new int[]{1,2,3,4};
+```
+
+
+
+##### 3.1 赋值：
+
+```
+array2 = array1;
+```
+
+如何理解：将array1保存的数组的地址值赋给了array2，使得array1和array2共同指向堆空间中的同一个数组实体。
+
+![image-20210221151246937](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221151246937.png)
+
+##### 3.2 复制：
+
+```
+array2 = new int[array1.length];
+for(int i = 0;i < array2.length;i++){
+	array2[i] = array1[i];
+}
+```
+
+如何理解：我们通过new的方式，给array2在堆空间中新开辟了数组的空间。将array1数组中的元素值一个一个的赋值到array2数组中。
+
+#### 4.数组元素的反转
+
+```
+//方法一：
+//		for(int i = 0;i < arr.length / 2;i++){
+//			String temp = arr[i];
+//			arr[i] = arr[arr.length - i -1];
+//			arr[arr.length - i -1] = temp;
+//		}
+
+//方法二：
+//		for(int i = 0,j = arr.length - 1;i < j;i++,j--){
+//			String temp = arr[i];
+//			arr[i] = arr[j];
+//			arr[j] = temp;
+//		}
+```
+
+
+
+##### 5.数组中指定元素的查找：搜索、检索
+
+##### 5.1 线性查找： 
+
+实现思路：通过遍历的方式，一个一个的数据进行比较、查找。
+适用性：具有普遍适用性。
+
+##### 5.2 二分法查找：
+
+实现思路：每次比较中间值，折半的方式检索。
+适用性：（前提：数组必须有序）
+
+#### 6.数组的排序算法
+
+![image-20210221151456555](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221151456555.png)
+
+
+
+![image-20210221151516037](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221151516037.png)
+
+![image-20210221151539650](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221151539650.png)
+
+##### 4.手写冒泡
+
+	int[] arr = new int[]{43,32,76,-98,0,64,33,-21,32,99};
+		
+		//冒泡排序
+		for(int i = 0;i < arr.length - 1;i++){
+			
+			for(int j = 0;j < arr.length - 1 - i;j++){
+				
+				if(arr[j] > arr[j + 1]){
+					int temp = arr[j];
+					arr[j] = arr[j + 1];
+					arr[j + 1] = temp;
+				}
+				
+			}
+			
+		}		
+
+
+### 3.4 Arrays 工具类的使用
+
+#### 1.理解：
+
+① 定义在java.util包下。
+② Arrays:提供了很多操作数组的方法。
+
+#### 2.使用：
+
+	//1.boolean equals(int[] a,int[] b):判断两个数组是否相等。
+		int[] arr1 = new int[]{1,2,3,4};
+		int[] arr2 = new int[]{1,3,2,4};
+		boolean isEquals = Arrays.equals(arr1, arr2);
+		System.out.println(isEquals);
+		
+		//2.String toString(int[] a):输出数组信息。
+		System.out.println(Arrays.toString(arr1));
+		
+		//3.void fill(int[] a,int val):将指定值填充到数组之中。
+		Arrays.fill(arr1,10);
+		System.out.println(Arrays.toString(arr1));
+		
+		//4.void sort(int[] a):对数组进行排序。
+		Arrays.sort(arr2);
+		System.out.println(Arrays.toString(arr2));
+		
+		//5.int binarySearch(int[] a,int key)
+		int[] arr3 = new int[]{1,2....}		   
+		int index = Arrays.binarySearch(arr3, 210);
+		if(index >= 0){
+			System.out.println(index);
+		}else{
+			System.out.println("未找到");
+		}
+
+
+​					
+
+
+
+### 3.5 数组常见异常
+
+#### 1.数组角标越界异常：ArrayIndexOutOfBoundsException
+
+		int[] arr = new int[]{1,2,3,4,5};
+		//		for(int i = 0;i <= arr.length;i++){
+		//			System.out.println(arr[i]);
+		//		}
+			
+		//		System.out.println(arr[-2]);
+			
+		//		System.out.println("hello");
+
+#### 2.空指针异常：NullPointerException
+
+```
+//情况一：
+//		int[] arr1 = new int[]{1,2,3};
+//		arr1 = null;
+//		System.out.println(arr1[0]);
+
+//情况二：
+//		int[][] arr2 = new int[4][];
+//		System.out.println(arr2[0][0]);
+
+//情况：
+	String[] arr3 = new String[]{"AA","BB","CC"};
+	arr3[0] = null;
+	System.out.println(arr3[0].toString());		
+```
+
+##### 小知识：一旦程序出现异常，未处理时，就终止执行。
+
+
+
+
+
 ## 4. 面向的对象 - 上
+
+
+
+
+
+
 
 ## 5.  面向对象 - 中
 
@@ -37,7 +447,9 @@ class A extends B{}
 
 ##### 3.1 体现：一旦子类A继承父类B以后，子类A中就获取了父类B中声明的所有的属性和方法。
 
-   特别的，父类中声明为private的属性或方法，子类继承父类以后，仍然认为获取了父类中私的结构。只因为封装性的影响，使得子类不能直接调用父类的结构而已。
+特别的，父类中声明为private的属性或方法，子类继承父类以后，仍然认为获取了父类中私的结构。只因为封装性的影响，使得子类不能直接调用父类的结构而已。
+
+
 
 ##### 3.2 子类继承父类以后，还可以声明自己特有的属性或方法：实现功能的拓展。
 
@@ -1167,4 +1579,257 @@ jdk 8及之后的版本：可以省略final的声明
             局部内部类：外部类$数字 内部类名.class
 
 
+
+
+
+## 7. 异常处理
+
+### 7.1 常见异常
+
+#### 1.异常的体系结构
+
+
+
+![image-20210221125131712](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221125131712.png)
+
+![image-20210221125151281](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221125151281.png)
+
+2.从程序执行过程，看编译时异常和运行时异常
+
+![image-20210221125206500](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221125206500.png)
+
+编译时异常：执行javac.exe命名时，可能出现的异常
+运行时异常：执行java.exe命名时，出现的异常
+
+#### 3.常见的异常类型，请举例说明：
+
+````
+//******************以下是运行时异常***************************
+	//ArithmeticException
+	@Test
+	public void test6(){
+		int a = 10;
+		int b = 0;
+		System.out.println(a / b);
+	}
+	
+
+	//InputMismatchException
+	@Test
+	public void test5(){
+		Scanner scanner = new Scanner(System.in);
+		int score = scanner.nextInt();
+		System.out.println(score);
+		
+		scanner.close();
+	}
+	
+	//NumberFormatException
+	@Test
+	public void test4(){
+		
+		String str = "123";
+		str = "abc";
+		int num = Integer.parseInt(str);
+	}
+	
+	//ClassCastException
+	@Test
+	public void test3(){
+		Object obj = new Date();
+		String str = (String)obj;
+	}
+	
+	//IndexOutOfBoundsException
+	@Test
+	public void test2(){
+		//ArrayIndexOutOfBoundsException
+
+//		int[] arr = new int[10];
+//		System.out.println(arr[10]);
+		//StringIndexOutOfBoundsException
+		String str = "abc";
+		System.out.println(str.charAt(3));
+	}
+	
+
+	//NullPointerException
+	@Test
+	public void test1(){
+
+//		int[] arr = null;
+//		System.out.println(arr[3]);
+		
+
+		String str = "abc";
+		str = null;
+		System.out.println(str.charAt(0));
+		
+	}
+	
+	//******************以下是编译时异常 
+	@Test
+	public void test7(){
+
+//		File file = new File("hello.txt");
+//		FileInputStream fis = new FileInputStream(file);
+//		
+//		int data = fis.read();
+//		while(data != -1){
+//			System.out.print((char)data);
+//			data = fis.read();
+//		}
+//		
+//		fis.close();
+		
+
+	}
+````
+
+
+
+
+
+### 7.2 异常处理
+
+#### 1.java异常处理的抓抛模型
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221125450941.png" alt="image-20210221125450941" style="zoom: 150%;" />
+
+#### 2.异常处理方式一：try-catch-finally
+
+2.1 使用说明：
+
+````
+try{
+
+    //可能出现异常的代码
+
+    }catch(异常类型1 变量名1){
+    //处理异常的方式1
+    }catch(异常类型2 变量名2){
+    //处理异常的方式2
+    }catch(异常类型3 变量名3){
+    //处理异常的方式3
+    }
+    ....
+    finally{
+    //一定会执行的代码
+    }
+````
+
+![image-20210221125900228](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221125900228.png)
+
+
+
+##### 2.3：[面试题] 
+
+final、finally、finalize三者的区别？
+
+类似：
+throw 和 throws
+Collection 和 Collections
+String 、StringBuffer、StringBuilder
+ArrayList 、 LinkedList
+HashMap 、LinkedHashMap
+重写、重载
+
+结构不相似的：
+抽象类、接口
+== 、 equals()
+sleep()、wait()
+
+#### 3.异常处理方式二：throws
+
+"throws + 异常类型"写在方法的声明处。指明此方法执行时，可能会抛出的异常类型。
+一旦当方法体执行时，出现异常，仍会在异常代码处生成一个异常类的对象，此对象满足throws后异常类型时，就会被抛出。异常代码后续的代码，就不再执行！
+
+#### 4. 对比两种处理方式
+
+try-catch-finally:真正的将异常给处理掉了。
+throws的方式只是将异常抛给了方法的调用者。并没真正将异常处理掉。  
+
+
+
+##### 5. 体会开发中应该如何选择两种处理方式？
+
+5.1 如果父类中被重写的方法没throws方式处理异常，则子类重写的方法也不能使用throws，意味着如果子类重写的方法中异常，必须使用try-catch-finally方式处理。
+
+5.2 执行的方法a中，先后又调用了另外的几个方法，这几个方法是递进关系执行的。我们建议这几个方法使用throws的方式进行处理。而执行的方法a可以考虑使用try-catch-finally方式进行处理。
+
+
+
+##### 补充：
+
+方法重写的规则之一：
+子类重写的方法抛出的异常类型不大于父类被重写的方法抛出的异常类型
+
+
+
+
+
+
+
+### 7.3 手动抛出异常对象
+
+#### 1.使用说明
+
+在程序执行中，除了自动抛出异常对象的情况之外，我们还可以手动的throw一个异常类的对象。
+
+#### 2.[面试题] 
+
+throw 和  throws区别：
+throw 表示抛出一个异常类的对象，生成异常对象的过程。声明在方法体内。
+throws 属于异常处理的一种方式，声明在方法的声明处。
+
+#### 3.典型例题
+
+````
+class Student{
+	
+	private int id;
+	
+	public void regist(int id) throws Exception {
+		if(id > 0){
+			this.id = id;
+		}else{
+			//手动抛出异常对象
+
+//			throw new RuntimeException("您输入的数据非法！");
+//			throw new Exception("您输入的数据非法！");
+			throw new MyException("不能输入负数");
+
+		}
+		
+	}
+	
+	@Override
+	public String toString() {
+		return "Student [id=" + id + "]";
+	}
+}
+````
+
+
+
+### 7.4 自定义异常类
+
+如何自定义一个异常类？
+
+![image-20210221130851870](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221130851870.png)
+
+```
+public class MyException extends Exception{
+	
+	static final long serialVersionUID = -7034897193246939L;
+	
+	public MyException(){
+		
+	}
+	
+	public MyException(String msg){
+		super(msg);
+	}
+}
+```
 
