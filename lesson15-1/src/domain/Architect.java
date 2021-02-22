@@ -20,8 +20,11 @@ public class Architect extends  Designer{
         this.stock = stock;
     }
 
-
     public String toString() {
         return getDetail() + "\t\t架构师\t\t" + getStatus() + "\t\t" + getBonus() + "\t\t" + stock + "\t\t" + getEquipment().getDescription();
+    }
+
+    public String getDetailsForTeam(){
+        return getTeamBaseDetails() + "\t\t架构师" + "\t\t" + getBonus() + "\t\t" + getStock();
     }
 }
