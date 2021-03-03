@@ -1,27 +1,33 @@
 package service;
-/**
-    表示员工的状态
 
- */
-public class Status {
+// 表示员工的状态
 
-    private final String NAME;
+// 自定义枚举类
+//public class Status {
+//
+//    private final String NAME;
+//
+//    private Status(String name){
+//
+//        NAME = name;
+//    }
+//
+//    public static final Status FREE = new Status("FREE");
+//    public static final Status BUSY = new Status("BUSY");
+//    public static final Status VOCATION = new Status("VOCATION");
+//
+//    public String getNAME() {
+//        return NAME;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return getNAME();
+//    }
+//}
 
-    private Status(String name){
 
-        NAME = name;
-    }
-
-    public static final Status FREE = new Status("FREE");
-    public static final Status BUSY = new Status("BUSY");
-    public static final Status VOCATION = new Status("VOCATION");
-
-    public String getNAME() {
-        return NAME;
-    }
-
-    @Override
-    public String toString() {
-        return getNAME();
-    }
+// Enum 关键字
+public enum Status{
+    FREE,BUSY,VOCATION;
 }

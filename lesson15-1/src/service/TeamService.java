@@ -52,11 +52,16 @@ public class TeamService {
 
         // 该员工已是某个团队成员
         Programmer p = (Programmer)e; // 强制类型转换
-        if("BUSY".equals(p.getStatus().getNAME())){
-            throw new TeamException("该员工已是某个团队成员");
-        }else if("VOCATION".equals(p.getStatus().getNAME())){
-            throw new TeamException("vocation");
+//        if("BUSY".equals(p.getStatus().getNAME())){
+//            throw new TeamException("该员工已是某个团队成员");
+//        }else if("VOCATION".equals(p.getStatus().getNAME())){
+//            throw new TeamException("vocation");
+//        }
+        switch (p.getStatus()) { // byte/short/char/int/String/枚举类对象
+            case BUSY: throw new TeamException("员工已是某个团队成员");
+            case VOCATION: throw new TeamException("该员工正在休假");
         }
+
 
         // 团队至多只能有一个架构师
         // 1. 获取team中已有成员中架构师，设计师，程序员人数

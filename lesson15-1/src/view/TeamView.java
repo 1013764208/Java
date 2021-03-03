@@ -54,7 +54,7 @@ public class TeamView {
         }else {
             System.out.println("ID\t\t姓  名\t\t年龄\t\t工资\t\t\t职位\t\t\t状态\t\t\t奖金\t\t\t股票\t\t\t领取设备");
 
-            for(int i = 0;i<employees.length;i++){
+            for(int i = 0; i < employees.length; i++){
                 System.out.println(employees[i]);
             }
         }
