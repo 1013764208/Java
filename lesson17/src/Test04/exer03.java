@@ -1,0 +1,43 @@
+package Test04;
+
+import org.junit.Test;
+
+/**
+ * @author HXS
+ * @create 2021-03-03 9:40
+ */
+
+/*
+    获取两个字符串中最大相同子串。比如：
+    str1 = "abcwerthelloyuiodef“   str2 = "cvhellobnm"
+    提示：将短的那个串进行长度依次递减的子串与较长的串比较
+ */
+public class exer03 {
+
+    // 前提：只有一个最大字串
+    public String getMaxSameString(String str1,String str2){
+        if (str1 != null && str2 != null){
+            String maxStr = (str1.length() >= str2.length()) ? str1 : str2;
+            String minStr = (str1.length()  < str2.length()) ? str1 : str2;
+            int length = minStr.length();
+
+            for (int i = 0; i < length; i++ ){
+                for (int x = 0, y = length - i; y <= length; x++, y++){
+                    String subStr = minStr.substring(x, y);
+                    // contain 当且仅当此字符串包含指定的 char 值序列时，返回 true
+                    if (maxStr.contains(subStr)){
+                        return subStr;
+                    }
+                }
+            }
+        } return null;
+    }
+
+    @Test
+    public void test(){
+        String str1 = "abcwerthelloyuiodef";
+        String str2 = "cvhellobnm";
+        String str = getMaxSameString(str1,str2);
+        System.out.println(str);
+    }
+}

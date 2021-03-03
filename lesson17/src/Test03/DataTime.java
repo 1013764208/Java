@@ -39,9 +39,6 @@ public class DataTime {
         3.2 sql.Date -> util.Date 对象  多态
         3.3 util.Date -> sql.Date 对象
 
-
-
-
      */
 
     @Test

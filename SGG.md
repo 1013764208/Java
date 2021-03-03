@@ -2230,3 +2230,539 @@ notifyAll():一旦执行此方法，就会唤醒所有被wait的线程。
 
 
 
+## 9. 常用类
+
+### 9.1 string 
+
+java.lang.String类的使用
+
+#### 1.概述
+
+![image-20210302141339729](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210302141339729.png)
+
+#### 2.String的不可变性
+
+##### 2.1 说明
+
+![image-20210302141436014](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210302141436014.png)
+
+##### 2.2 代码举例
+
+```
+String s1 = "abc";//字面量的定义方式
+String s2 = "abc";
+s1 = "hello";
+
+System.out.println(s1 == s2);//比较s1和s2的地址值
+
+System.out.println(s1);//hello
+System.out.println(s2);//abc
+
+System.out.println("*****************");
+
+String s3 = "abc";
+s3 += "def";
+System.out.println(s3);//abcdef
+System.out.println(s2);
+
+System.out.println("*****************");
+
+String s4 = "abc";
+String s5 = s4.replace('a', 'm');
+System.out.println(s4);//abc
+System.out.println(s5);//mbc
+```
+
+
+
+##### 2.3 图示
+
+![image-20210302141517682](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210302141517682.png)
+
+
+
+#### 3.String实例化的不同方式
+
+##### 3.1 方式说明
+
+方式一：通过字面量定义的方式
+方式二：通过new + 构造器的方式
+
+##### 3.2 代码举例
+
+```
+//通过字面量定义的方式：此时的s1和s2的数据javaEE声明在方法区中的字符串常量池中
+String s1 = "javaEE";
+String s2 = "javaEE";
+//通过new + 构造器的方式:此时的s3和s4保存的地址值，是数据在堆空间中开辟空间以后对应的地址值。
+String s3 = new String("javaEE");
+String s4 = new String("javaEE");
+
+System.out.println(s1 == s2);//true
+System.out.println(s1 == s3);//false
+System.out.println(s1 == s4);//false
+System.out.println(s3 == s4);//false
+```
+
+
+
+##### 3.3 面试题
+
+String s = new String("abc");方式创建对象，在内存中创建了几个对象？
+两个:一个是堆空间中new结构，另一个是char[]对应的常量池中的数据："abc"
+
+##### 3.4 图示
+
+![image-20210302141612037](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210302141612037.png)
+
+#### 4. 字符串拼接方式赋值的对比
+
+##### 4.1 说明
+
+1.常量与常量的拼接结果在常量池。且常量池中不会存在相同内容的常量。
+2.只要其中一个是变量，结果就在堆中。
+3.如果拼接的结果调用intern()方法，返回值就在常量池中
+
+##### 4.2 代码举例
+
+```
+String s1 = "javaEE";
+String s2 = "hadoop";
+
+String s3 = "javaEEhadoop";
+String s4 = "javaEE" + "hadoop";
+String s5 = s1 + "hadoop";
+String s6 = "javaEE" + s2;
+String s7 = s1 + s2;
+
+System.out.println(s3 == s4);//true
+System.out.println(s3 == s5);//false
+System.out.println(s3 == s6);//false
+System.out.println(s3 == s7);//false
+System.out.println(s5 == s6);//false
+System.out.println(s5 == s7);//false
+System.out.println(s6 == s7);//false
+
+String s8 = s6.intern();//返回值得到的s8使用的常量值中已经存在的“javaEEhadoop”
+System.out.println(s3 == s8);//true
+
+
+String s1 = "javaEEhadoop";
+String s2 = "javaEE";
+String s3 = s2 + "hadoop";
+System.out.println(s1 == s3);//false
+
+final String s4 = "javaEE";//s4:常量
+String s5 = s4 + "hadoop";
+System.out.println(s1 == s5);//true
+```
+
+
+
+
+
+#### 5.常用方法：
+
+int length()：返回字符串的长度： return value.length
+char charAt(int index)： 返回某索引处的字符return value[index]
+boolean isEmpty()：判断是否是空字符串：return value.length == 0
+String toLowerCase()：使用默认语言环境，将 String 中的所字符转换为小写
+String toUpperCase()：使用默认语言环境，将 String 中的所字符转换为大写
+String trim()：返回字符串的副本，忽略前导空白和尾部空白
+boolean equals(Object obj)：比较字符串的内容是否相同
+boolean equalsIgnoreCase(String anotherString)：与equals方法类似，忽略大小写
+String concat(String str)：将指定字符串连接到此字符串的结尾。 等价于用“+”
+int compareTo(String anotherString)：比较两个字符串的大小
+String substring(int beginIndex)：返回一个新的字符串，它是此字符串的从beginIndex开始截取到最后的一个子字符串。
+String substring(int beginIndex, int endIndex) ：返回一个新字符串，它是此字符串从beginIndex开始截取到endIndex(不包含)的一个子字符串。
+
+boolean endsWith(String suffix)：测试此字符串是否以指定的后缀结束
+boolean startsWith(String prefix)：测试此字符串是否以指定的前缀开始
+boolean startsWith(String prefix, int toffset)：测试此字符串从指定索引开始的子字符串是否以指定前缀开始
+
+boolean contains(CharSequence s)：当且仅当此字符串包含指定的 char 值序列时，返回 true
+int indexOf(String str)：返回指定子字符串在此字符串中第一次出现处的索引
+int indexOf(String str, int fromIndex)：返回指定子字符串在此字符串中第一次出现处的索引，从指定的索引开始
+int lastIndexOf(String str)：返回指定子字符串在此字符串中最右边出现处的索引
+int lastIndexOf(String str, int fromIndex)：返回指定子字符串在此字符串中最后一次出现处的索引，从指定的索引开始反向搜索
+
+注：indexOf和lastIndexOf方法如果未找到都是返回-1
+
+替换：
+String replace(char oldChar, char newChar)：返回一个新的字符串，它是通过用 newChar 替换此字符串中出现的所 oldChar 得到的。
+String replace(CharSequence target, CharSequence replacement)：使用指定的字面值替换序列替换此字符串所匹配字面值目标序列的子字符串。
+String replaceAll(String regex, String replacement)：使用给定的 replacement 替换此字符串所匹配给定的正则表达式的子字符串。
+String replaceFirst(String regex, String replacement)：使用给定的 replacement 替换此字符串匹配给定的正则表达式的第一个子字符串。
+匹配:
+boolean matches(String regex)：告知此字符串是否匹配给定的正则表达式。
+切片：
+String[] split(String regex)：根据给定正则表达式的匹配拆分此字符串。
+String[] split(String regex, int limit)：根据匹配给定的正则表达式来拆分此字符串，最多不超过limit个，如果超过了，剩下的全部都放到最后一个元素中。
+
+
+
+#### 6. String与其它结构的转换	 
+
+##### 6.1 与基本数据类型、包装类之间的转换
+
+ String --> 基本数据类型、包装类：调用包装类的静态方法：parseXxx(str)
+ 基本数据类型、包装类 --> String:调用String重载的valueOf(xxx)
+
+```
+ @Test
+ public void test1(){
+     String str1 = "123";
+	 //  int num = (int)str1;//错误的
+     int num = Integer.parseInt(str1);
+ 	 String str2 = String.valueOf(num);//"123"
+ 	 String str3 = num + "";
+
+	 System.out.println(str1 == str3);
+}
+```
+
+
+
+
+
+##### 6.2 与字符数组之间的转换
+
+String --> char[]:调用String的toCharArray()
+char[] --> String:调用String的构造器
+
+```
+@Test
+public void test2(){
+    String str1 = "abc123";  //题目： a21cb3
+
+    char[] charArray = str1.toCharArray();
+    for (int i = 0; i < charArray.length; i++) {
+        System.out.println(charArray[i]);
+    }
+    
+    char[] arr = new char[]{'h','e','l','l','o'};
+    String str2 = new String(arr);
+    System.out.println(str2);
+
+}
+```
+
+
+
+
+
+##### 6.3 与字节数组之间的转换
+
+编码：String --> byte[]:调用String的getBytes()
+解码：byte[] --> String:调用String的构造器
+
+编码：字符串 -->字节  (看得懂 --->看不懂的二进制数据)
+解码：编码的逆过程，字节 --> 字符串 （看不懂的二进制数据 ---> 看得懂
+
+说明：解码时，要求解码使用的字符集必须与编码时使用的字符集一致，否则会出现乱码。
+
+```
+@Test
+public void test3() throws UnsupportedEncodingException {
+    String str1 = "abc123中国";
+    byte[] bytes = str1.getBytes();//使用默认的字符集，进行编码。
+    System.out.println(Arrays.toString(bytes));
+
+    byte[] gbks = str1.getBytes("gbk");//使用gbk字符集进行编码。
+    System.out.println(Arrays.toString(gbks));
+    
+    System.out.println("******************");
+    
+    String str2 = new String(bytes);//使用默认的字符集，进行解码
+    System.out.println(str2);
+    
+    String str3 = new String(gbks);
+    System.out.println(str3);//出现乱码 原因：编码集和解码集不一致
+
+
+    String str4 = new String(gbks, "gbk");
+    System.out.println(str4);//没出现乱码 原因：编码集和解码集一致
+
+}
+```
+
+
+
+
+
+
+##### 6.4 与StringBuffer、StringBuilder之间的转换
+
+String -->StringBuffer、StringBuilder: 调用StringBuffer、StringBuilder构造器
+
+StringBuffer、StringBuilder -->String:①调用String构造器；②StringBuffer、StringBuilder的toString()
+
+
+
+#### 7. JVM中字符串常量池存放位置说明：
+
+jdk 1.6 (jdk 6.0 ,java 6.0):字符串常量池存储在方法区（永久区）
+jdk 1.7:字符串常量池存储在堆空间
+jdk 1.8:字符串常量池存储在方法区（元空间）
+
+##### 1. 常见算法题目的考查：
+
+1）模拟一个trim方法，去除字符串两端的空格。
+
+2）将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为”abfedcg”
+
+3）获取一个字符串在另一个字符串中出现的次数。
+      比如：获取“ ab”在 “abkkcadkabkebfkabkskab” 中出现的次数
+
+4）获取两个字符串中最大相同子串。比如：
+   str1 = "abcwerthelloyuiodef“;str2 = "cvhellobnm"
+   提示：将短的那个串进行长度依次递减的子串与较长的串比较。
+
+5）对字符串中字符进行自然顺序排序。
+提示：
+1.字符串变成字符数组。
+2.对数组排序，择，冒泡，Arrays.sort();
+3.将排序后的数组变成字符串。
+
+
+
+
+
+
+
+### 9.2 string，stringBuffer，stringBuilder
+
+#### 1.String、StringBuffer、StringBuilder三者的对比
+
+![image-20210302142344655](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210302142344655.png)
+
+#### 2.StringBuffer与StringBuilder的内存解析
+
+以StringBuffer为例： 
+
+````
+String str = new String();//char[] value = new char[0];
+String str1 = new String("abc");//char[] value = new char[]{'a','b','c'};
+
+StringBuffer sb1 = new StringBuffer();//char[] value = new char[16];底层创建了一个长度是16的数组。
+
+System.out.println(sb1.length());//
+sb1.append('a');//value[0] = 'a';
+sb1.append('b');//value[1] = 'b';
+
+StringBuffer sb2 = new StringBuffer("abc");//char[] value = new char["abc".length() + 16];
+
+//问题1. System.out.println(sb2.length());//3
+//问题2. 扩容问题:如果要添加的数据底层数组盛不下了，那就需要扩容底层的数组
+````
+
+
+默认情况下，扩容为原来容量的2倍 + 2，同时将原数组中的元素复制到新的数组中。
+
+**指导意义：开发中建议大家使用：StringBuffer(int capacity) 或 StringBuilder(int capacity)**
+
+
+
+##### 3.对比String、StringBuffer、StringBuilder三者的执行效率
+
+从高到低排列：StringBuilder > StringBuffer > String
+
+
+
+#### 4.StringBuffer、StringBuilder中的常用方法
+
+增：append(xxx)
+删：delete(int start,int end)
+改：setCharAt(int n ,char ch) / replace(int start, int end, String str)
+查：charAt(int n )
+插：insert(int offset, xxx)
+长度：length();
+遍历：for() + charAt() / toString()
+
+
+
+
+
+
+
+
+
+### 9.3 JDK 8 之前的时间日期API
+
+#### 1.获取系统当前时间：
+
+**System类中的currentTimeMillis()**
+
+```
+long time = System.currentTimeMillis();
+//返回当前时间与1970年1月1日0时0分0秒之间以毫秒为单位的时间差。
+//称为时间戳
+System.out.println(time);
+```
+
+
+
+#### 2. java.util.Date类与java.sql.Date类
+
+![image-20210302142740756](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210302142740756.png)
+
+
+
+#### 3. java.text.SimpleDataFormat类
+
+![image-20210302143238150](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210302143238150.png)
+
+```
+ @Test
+ public void test2(){
+ 	//构造器一：Date()：创建一个对应当前时间的Date对象
+ 	Date date1 = new Date();
+    System.out.println(date1.toString());
+    //Sat Feb 16 16:35:31 GMT+08:00 2019
+
+    System.out.println(date1.getTime());//1550306204104
+
+    //构造器二：创建指定毫秒数的Date对象
+    Date date2 = new Date(155030620410L);
+    System.out.println(date2.toString());
+
+	//创建java.sql.Date对象
+	java.sql.Date date3 = new java.sql.Date(35235325345L);
+    System.out.println(date3);//1971-02-13
+
+	//如何将java.util.Date对象转换为java.sql.Date对象
+    //情况一：
+//   Date date4 = new java.sql.Date(2343243242323L);
+//   java.sql.Date date5 = (java.sql.Date) date4;
+    
+    //情况二：
+    Date date6 = new Date();
+    java.sql.Date date7 = new 	        java.sql.Date(date6.getTime());
+
+}
+
+```
+
+
+
+
+
+
+
+
+
+>如何实例化
+>如何将java.util.Date对象转换为java.sql.Date对象
+>*/
+> @Test
+> public void test2(){
+>//构造器一：Date()：创建一个对应当前时间的Date对象
+>Date date1 = new Date();
+>System.out.println(date1.toString());//Sat Feb 16 16:35:31 GMT+08:00 2019
+
+System.out.println(date1.getTime());//1550306204104
+
+//构造器二：创建指定毫秒数的Date对象
+Date date2 = new Date(155030620410L);
+System.out.println(date2.toString());
+
+//创建java.sql.Date对象
+java.sql.Date date3 = new java.sql.Date(35235325345L);
+System.out.println(date3);//1971-02-13
+
+//如何将java.util.Date对象转换为java.sql.Date对象
+//情况一：
+//        Date date4 = new java.sql.Date(2343243242323L);
+//        java.sql.Date date5 = (java.sql.Date) date4;
+//情况二：
+Date date6 = new Date();
+java.sql.Date date7 = new java.sql.Date(date6.getTime());
+
+
+    }
+
+3. java.text.SimpleDataFormat类
+SimpleDateFormat对日期Date类的格式化和解析
+1.两个操作：
+1.1 格式化：日期 --->字符串
+1.2 解析：格式化的逆过程，字符串 ---> 日期
+
+2.SimpleDateFormat的实例化:new + 构造器
+
+
+//*************照指定的方式格式化和解析：调用带参的构造器*****************
+//        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyy.MMMMM.dd GGG hh:mm aaa");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        //格式化
+        String format1 = sdf1.format(date);
+        System.out.println(format1);//2019-02-18 11:48:27
+        //解析:要求字符串必须是符合SimpleDateFormat识别的格式(通过构造器参数体现),
+        //否则，抛异常
+        Date date2 = sdf1.parse("2020-02-18 11:48:27");
+        System.out.println(date2);
+
+小练习：
+/*
+    练习一：字符串"2020-09-08"转换为java.sql.Date
+
+    练习二："天打渔两天晒网"   1990-01-01  xxxx-xx-xx 打渔？晒网？
+    
+    举例：2020-09-08 ？ 总天数
+    
+    总天数 % 5 == 1,2,3 : 打渔
+    总天数 % 5 == 4,0 : 晒网
+    
+    总天数的计算？
+    方式一：( date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24) + 1
+    方式二：1990-01-01  --> 2019-12-31  +  2020-01-01 -->2020-09-08
+     */
+    @Test
+    public void testExer() throws ParseException {
+        String birth = "2020-09-08";
+    
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf1.parse(birth);
+//        System.out.println(date);
+
+        java.sql.Date birthDate = new java.sql.Date(date.getTime());
+        System.out.println(birthDate);
+    }
+4.Calendar类：日历类、抽象类
+		//1.实例化
+        //方式一：创建其子类（GregorianCalendar的对象
+        //方式二：调用其静态方法getInstance()
+        Calendar calendar = Calendar.getInstance();
+//        System.out.println(calendar.getClass());
+
+        //2.常用方法
+        //get()
+        int days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+        System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
+    
+        //set()
+        //calendar可变性
+         calendar.set(Calendar.DAY_OF_MONTH,22);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+    
+        //add()
+        calendar.add(Calendar.DAY_OF_MONTH,-3);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+    
+        //getTime():日历类---> Date
+        Date date = calendar.getTime();
+        System.out.println(date);
+    
+        //setTime():Date ---> 日历类
+        Date date1 = new Date();
+        calendar.setTime(date1);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+
+
+
+
+
+
