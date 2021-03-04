@@ -2616,157 +2616,528 @@ System.out.println(time);
 
 ![image-20210302143238150](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210302143238150.png)
 
-```
- @Test
- public void test2(){
- 	//构造器一：Date()：创建一个对应当前时间的Date对象
- 	Date date1 = new Date();
-    System.out.println(date1.toString());
-    //Sat Feb 16 16:35:31 GMT+08:00 2019
-
-    System.out.println(date1.getTime());//1550306204104
-
-    //构造器二：创建指定毫秒数的Date对象
-    Date date2 = new Date(155030620410L);
-    System.out.println(date2.toString());
-
-	//创建java.sql.Date对象
-	java.sql.Date date3 = new java.sql.Date(35235325345L);
-    System.out.println(date3);//1971-02-13
-
-	//如何将java.util.Date对象转换为java.sql.Date对象
-    //情况一：
-//   Date date4 = new java.sql.Date(2343243242323L);
-//   java.sql.Date date5 = (java.sql.Date) date4;
-    
-    //情况二：
-    Date date6 = new Date();
-    java.sql.Date date7 = new 	        java.sql.Date(date6.getTime());
-
-}
-
-```
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304192224031.png" alt="image-20210304192224031" style="zoom:200%;" />
 
 
 
 
 
+#### 4.Calendar类：日历类、抽象类
 
-
-
-
->如何实例化
->如何将java.util.Date对象转换为java.sql.Date对象
->*/
-> @Test
-> public void test2(){
->//构造器一：Date()：创建一个对应当前时间的Date对象
->Date date1 = new Date();
->System.out.println(date1.toString());//Sat Feb 16 16:35:31 GMT+08:00 2019
-
-System.out.println(date1.getTime());//1550306204104
-
-//构造器二：创建指定毫秒数的Date对象
-Date date2 = new Date(155030620410L);
-System.out.println(date2.toString());
-
-//创建java.sql.Date对象
-java.sql.Date date3 = new java.sql.Date(35235325345L);
-System.out.println(date3);//1971-02-13
-
-//如何将java.util.Date对象转换为java.sql.Date对象
-//情况一：
-//        Date date4 = new java.sql.Date(2343243242323L);
-//        java.sql.Date date5 = (java.sql.Date) date4;
-//情况二：
-Date date6 = new Date();
-java.sql.Date date7 = new java.sql.Date(date6.getTime());
-
-
-    }
-
-3. java.text.SimpleDataFormat类
-SimpleDateFormat对日期Date类的格式化和解析
-1.两个操作：
-1.1 格式化：日期 --->字符串
-1.2 解析：格式化的逆过程，字符串 ---> 日期
-
-2.SimpleDateFormat的实例化:new + 构造器
-
-
-//*************照指定的方式格式化和解析：调用带参的构造器*****************
-//        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyy.MMMMM.dd GGG hh:mm aaa");
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        //格式化
-        String format1 = sdf1.format(date);
-        System.out.println(format1);//2019-02-18 11:48:27
-        //解析:要求字符串必须是符合SimpleDateFormat识别的格式(通过构造器参数体现),
-        //否则，抛异常
-        Date date2 = sdf1.parse("2020-02-18 11:48:27");
-        System.out.println(date2);
-
-小练习：
-/*
-    练习一：字符串"2020-09-08"转换为java.sql.Date
-
-    练习二："天打渔两天晒网"   1990-01-01  xxxx-xx-xx 打渔？晒网？
-    
-    举例：2020-09-08 ？ 总天数
-    
-    总天数 % 5 == 1,2,3 : 打渔
-    总天数 % 5 == 4,0 : 晒网
-    
-    总天数的计算？
-    方式一：( date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24) + 1
-    方式二：1990-01-01  --> 2019-12-31  +  2020-01-01 -->2020-09-08
-     */
-    @Test
-    public void testExer() throws ParseException {
-        String birth = "2020-09-08";
-    
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf1.parse(birth);
-//        System.out.println(date);
-
-        java.sql.Date birthDate = new java.sql.Date(date.getTime());
-        System.out.println(birthDate);
-    }
-4.Calendar类：日历类、抽象类
-		//1.实例化
+    	//1.实例化
         //方式一：创建其子类（GregorianCalendar的对象
         //方式二：调用其静态方法getInstance()
         Calendar calendar = Calendar.getInstance();
-//        System.out.println(calendar.getClass());
-
-        //2.常用方法
+        // System.out.println(calendar.getClass());
+    
+    	//2.常用方法
         //get()
         int days = calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(days);
         System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
     
-        //set()
+    	//set()
         //calendar可变性
-         calendar.set(Calendar.DAY_OF_MONTH,22);
+        calendar.set(Calendar.DAY_OF_MONTH,22);
         days = calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(days);
     
-        //add()
+    	//add()
         calendar.add(Calendar.DAY_OF_MONTH,-3);
         days = calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(days);
     
-        //getTime():日历类---> Date
+    	//getTime():日历类---> Date
         Date date = calendar.getTime();
         System.out.println(date);
     
-        //setTime():Date ---> 日历类
+    	//setTime():Date ---> 日历类
         Date date1 = new Date();
         calendar.setTime(date1);
         days = calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(days);
+    
 
 
 
 
 
 
+
+
+
+### 9.4 JDK8之后的时间日期API
+
+#### 1. 日期时间API的迭代：
+
+第一代：jdk 1.0 Date类
+第二代：jdk 1.1 Calendar类，一定程度上替换Date类
+第三代：jdk 1.8 提出了新的一套API
+
+#### 2. 前两代存在的问题举例：
+
+可变性：像日期和时间这样的类应该是不可变的。
+偏移性：Date中的年份是从1900开始的，而月份都从0开始。
+格式化：格式化只对Date用，Calendar则不行。
+此外，它们也不是线程安全的；不能处理闰秒等。
+
+#### 3. java 8 中新的日期时间API涉及到的包
+
+![image-20210304192905385](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304192905385.png)
+
+
+
+#### 4. 本地日期、本地时间、本地日期时间的使用：
+
+**LocalDate / LocalTime / LocalDateTime**
+
+##### 4.1 说明：
+
+① 分别表示使用 ISO-8601日历系统的日期、时间、日期和时间。它们提供了简单的本地日期或时间，并不包含当前的时间信息，也不包含与时区相关的信息。
+② LocalDateTime相较于LocalDate、LocalTime，使用频率要高
+③ 类似于Calendar
+
+##### 4.2 常用方法：
+
+![image-20210304193039863](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304193039863.png)
+
+
+
+#### 5. 时间点：Instant
+
+##### 5.1 说明：
+
+① 时间线上的一个瞬时点。 概念上讲，它只是简单的表示自1970年1月1日0时0分0秒（UTC开始的秒数。）
+② 类似于 java.util.Date类
+
+##### 5.2 常用方法：
+
+![image-20210304193124237](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304193124237.png)
+
+
+
+
+
+#### 6. 日期时间格式化类：DateTimeFormatter
+
+##### 6.1 说明：
+
+① 格式化或解析日期、时间
+② 类似于SimpleDateFormat
+
+
+
+##### 6.2 常用方法：
+
+① 实例化方式：
+预定义的标准格式。如：ISO_LOCAL_DATE_TIME;ISO_LOCAL_DATE;ISO_LOCAL_TIME
+本地化相关的格式。如：ofLocalizedDateTime(FormatStyle.LONG)
+自定义的格式。如：ofPattern(“yyyy-MM-dd hh:mm:ss”)
+
+② 常用方法：
+
+![image-20210304193316862](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304193316862.png)
+
+
+
+![image-20210304193351258](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304193351258.png)
+
+
+
+#### 7.其它API的使用 （不讲）
+
+##### 7.1 带时区的日期时间：ZonedDateTime / ZoneId 
+
+```
+// ZoneId:类中包含了所的时区信息
+  @Test
+  public void test1(){
+  	//getAvailableZoneIds():获取所的ZoneId
+  	Set<String> zoneIds = ZoneId.getAvailableZoneIds();
+  	for(String s : zoneIds){
+  	System.out.println(s);
+  }
+  	System.out.println();
+		
+
+  //获取“Asia/Tokyo”时区对应的时间
+    LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
+    System.out.println(localDateTime);		
+  }
+
+
+// ZonedDateTime:带时区的日期时间
+  @Test
+  public void test2(){
+  	//now():获取本时区的ZonedDateTime对象
+  	ZonedDateTime zonedDateTime = ZonedDateTime.now();
+  	System.out.println(zonedDateTime);
+  	//now(ZoneId id):获取指定时区的ZonedDateTime对象
+  	ZonedDateTime zonedDateTime1 = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+  	System.out.println(zonedDateTime1);
+  }
+```
+
+
+
+##### 7.2 时间间隔：Duration--用于计算两个“时间”间隔，以秒和纳秒为基准
+
+```
+  @Test
+  public void test3(){
+  	LocalTime localTime = LocalTime.now();
+  	LocalTime localTime1 = LocalTime.of(15, 23, 32);
+    // between():静态方法，返回Duration对象，表示两个时间的间隔
+    Duration duration = Duration.between(localTime1, localTime);
+    System.out.println(duration);
+		
+
+	System.out.println(duration.getSeconds());
+    System.out.println(duration.getNano());
+		
+    LocalDateTime localDateTime = LocalDateTime.of(2016, 6, 12, 15, 23, 32);
+    LocalDateTime localDateTime1 = LocalDateTime.of(2017, 6, 12, 15, 23, 32);
+		
+    Duration duration1 = Duration.between(localDateTime1, localDateTime);
+	System.out.println(duration1.toDays());	
+  }
+```
+
+
+
+##### 7.3 日期间隔：Period --用于计算两个“日期”间隔，以年、月、日衡量
+
+```
+  @Test
+  public void test4(){
+    LocalDate localDate = LocalDate.now();
+    LocalDate localDate1 = LocalDate.of(2028, 3, 18);
+		
+
+    Period period = Period.between(localDate, localDate1);
+    System.out.println(period);
+		
+    System.out.println(period.getYears());
+    System.out.println(period.getMonths());
+    System.out.println(period.getDays());
+		
+	Period period1 = period.withYears(2);
+    System.out.println(period1);
+  }
+
+
+```
+
+
+
+##### 	7.4 日期时间校正器：TemporalAdjuster
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 9.5 比较器
+
+#### 1. Java比较器的使用背景：
+
+Java中的对象，正常情况下，只能进行比较：==  或  != 。不能使用 > 或 < 的
+但是在开发场景中，我们需要对多个对象进行排序，言外之意，就需要比较对象的大小。
+如何实现？使用两个接口中的任何一个：Comparable 或 Comparator
+
+
+
+
+
+#### 2. 自然排序：使用Comparable接口
+
+##### 2.1 说明
+
+![image-20210304194155390](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304194155390.png)
+
+
+
+##### 2.2 自定义类代码举例：
+
+```
+public class Goods implements  Comparable{
+
+    private String name;
+    private double price;
+    
+   //指明商品比较大小的方式:照价格从低到高排序,再照产品名称从高到低排序
+    @Override
+    public int compareTo(Object o) {
+
+    	System.out.println("**************");
+        if(o instanceof Goods){
+            Goods goods = (Goods)o;
+            //方式一：
+            if(this.price > goods.price){
+                return 1;
+            }else if(this.price < goods.price){
+                return -1;
+            }else{
+//                return 0;
+               return -this.name.compareTo(goods.name);
+            }
+            //方式二：
+//           return Double.compare(this.price,goods.price);
+        }
+//        return 0;
+        throw new RuntimeException("传入的数据类型不一致！");
+    }
+// getter、setter、toString()、构造器：省略
+}
+```
+
+
+
+
+
+
+
+#### 3. 定制排序：使用Comparator接口
+
+##### 3.1 说明
+
+![image-20210304194454567](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304194454567.png)
+
+##### 3.2 代码举例：
+
+```
+Comparator com = new Comparator() {
+//指明商品比较大小的方式:照产品名称从低到高排序,再照价格从高到低排序     @Override
+  public int compare(Object o1, Object o2) {
+  	if(o1 instanceof Goods && o2 instanceof Goods){
+    	Goods g1 = (Goods)o1;
+        Goods g2 = (Goods)o2;
+        if(g1.getName().equals(g2.getName())){
+          return -Double.compare(g1.getPrice(),g2.getPrice());
+         }else{
+           return g1.getName().compareTo(g2.getName());
+         }
+      }
+        throw new RuntimeException("输入的数据类型不一致");
+    }
+}
+```
+
+
+
+使用：
+Arrays.sort(goods,com);
+Collections.sort(coll,com);
+new TreeSet(com);
+
+
+
+
+
+#### 4. 两种排序方式对比
+
+Comparable接口的方式一旦一定，保证Comparable接口实现类的对象在任何位置都可以比较大小。
+
+Comparator接口属于临时性的比较。
+
+
+
+
+
+
+
+
+
+
+
+#### 9.5 其他类
+
+##### 1. System类
+
+![image-20210304194815038](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304194815038.png)
+
+##### 2. Math类
+
+java.lang.Math提供了一系列静态方法用于科学计算。其方法的参数和返回值类型一般为double型。
+
+
+
+##### 3.BigInteger类、BigDecimal类
+
+说明：
+① java.math包的BigInteger可以表示不可变的任意精度的整数。
+② 要求数字精度比较高，用到java.math.BigDecimal类
+
+![image-20210304194855526](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304194855526.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 10. 枚举类和注解
+
+### 10.1 枚举类的使用
+
+#### 1.枚举类的说明：
+
+1. 枚举类的理解：类的对象只有有限个，确定的。我们称此类为枚举类
+
+2. 当需要定义一组常量时，强烈建议使用枚举类
+
+3. 如果枚举类中只一个对象，则可以作为单例模式的实现方式。
+
+
+
+#### 2. 如何自定义枚举类？步骤：
+
+//自定义枚举类
+class Season{
+ //1.声明Season对象的属性:private final修饰
+ private final String seasonName;
+ private final String seasonDesc;
+
+ //2.私化类的构造器,并给对象属性赋值
+ private Season(String seasonName,String seasonDesc){
+     this.seasonName = seasonName;
+     this.seasonDesc = seasonDesc;
+ }
+
+ //3.提供当前枚举类的多个对象：public static final的
+ public static final Season SPRING = new Season("春天","春暖花开");
+ public static final Season SUMMER = new Season("夏天","夏日炎炎");
+ public static final Season AUTUMN = new Season("秋天","秋高气爽");
+ public static final Season WINTER = new Season("冬天","冰天雪地");
+
+ //4.其他诉求1：获取枚举类对象的属性
+ public String getSeasonName() {
+     return seasonName;
+ }
+
+ public String getSeasonDesc() {
+     return seasonDesc;
+ }
+ //4.其他诉求1：提供toString()
+ @Override
+ public String toString() {
+     return "Season{" +
+             "seasonName='" + seasonName + '\'' +
+             ", seasonDesc='" + seasonDesc + '\'' +
+             '}';
+ }
+}
+
+3. jdk 5.0 新增使用enum定义枚举类。步骤：
+//使用enum关键字枚举类
+enum Season1 {
+    //1.提供当前枚举类的对象，多个对象之间用","隔开，末尾对象";"结束
+    SPRING("春天","春暖花开"),
+    SUMMER("夏天","夏日炎炎"),
+    AUTUMN("秋天","秋高气爽"),
+    WINTER("冬天","冰天雪地");
+
+    //2.声明Season对象的属性:private final修饰
+    private final String seasonName;
+    private final String seasonDesc;
+
+    //2.私化类的构造器,并给对象属性赋值
+
+    private Season1(String seasonName,String seasonDesc){
+        this.seasonName = seasonName;
+        this.seasonDesc = seasonDesc;
+    }
+
+    //4.其他诉求1：获取枚举类对象的属性
+    public String getSeasonName() {
+        return seasonName;
+    }
+
+    public String getSeasonDesc() {
+        return seasonDesc;
+    }
+
+}
+
+
+4. 使用enum定义枚举类之后，枚举类常用方法：（继承于java.lang.Enum类）
+Season1 summer = Season1.SUMMER;
+        //toString():返回枚举类对象的名称
+        System.out.println(summer.toString());
+
+//        System.out.println(Season1.class.getSuperclass());
+        System.out.println("****************");
+        //values():返回所的枚举类对象构成的数组
+        Season1[] values = Season1.values();
+        for(int i = 0;i < values.length;i++){
+            System.out.println(values[i]);
+        }
+        System.out.println("****************");
+        Thread.State[] values1 = Thread.State.values();
+        for (int i = 0; i < values1.length; i++) {
+            System.out.println(values1[i]);
+        }
+
+        //valueOf(String objName):返回枚举类中对象名是objName的对象。
+        Season1 winter = Season1.valueOf("WINTER");
+        //如果没objName的枚举类对象，则抛异常：IllegalArgumentException
+//        Season1 winter = Season1.valueOf("WINTER1");
+        System.out.println(winter);
+
+
+5. 使用enum定义枚举类之后，如何让枚举类对象分别实现接口：
+interface Info{
+    void show();
+}
+
+//使用enum关键字枚举类
+enum Season1 implements Info{
+    //1.提供当前枚举类的对象，多个对象之间用","隔开，末尾对象";"结束
+    SPRING("春天","春暖花开"){
+        @Override
+        public void show() {
+            System.out.println("春天在哪里？");
+        }
+    },
+    SUMMER("夏天","夏日炎炎"){
+        @Override
+        public void show() {
+            System.out.println("宁夏");
+        }
+    },
+    AUTUMN("秋天","秋高气爽"){
+        @Override
+        public void show() {
+            System.out.println("秋天不回来");
+        }
+    },
+    WINTER("冬天","冰天雪地"){
+        @Override
+        public void show() {
+            System.out.println("大约在冬季");
+        }
+    };
+}
