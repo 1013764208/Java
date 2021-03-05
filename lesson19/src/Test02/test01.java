@@ -1,7 +1,6 @@
 package Test02;
 
 import Test01.Person;
-import javafx.beans.binding.ObjectExpression;
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -2656,7 +2656,7 @@ System.out.println(time);
         calendar.setTime(date1);
         days = calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(days);
-    
+
 
 
 
@@ -3003,7 +3003,7 @@ java.lang.Math提供了一系列静态方法用于科学计算。其方法的参
 
 ### 10.1 枚举类的使用
 
-#### 1.枚举类的说明：
+#### 1.枚举类的说明
 
 1. 枚举类的理解：类的对象只有有限个，确定的。我们称此类为枚举类
 
@@ -3013,104 +3013,130 @@ java.lang.Math提供了一系列静态方法用于科学计算。其方法的参
 
 
 
-#### 2. 如何自定义枚举类？步骤：
+#### 2. 如何自定义枚举类？
 
+````
 //自定义枚举类
 class Season{
- //1.声明Season对象的属性:private final修饰
- private final String seasonName;
- private final String seasonDesc;
+  //1.声明Season对象的属性:private final修饰
+  private final String seasonName;
+  private final String seasonDesc;
 
- //2.私化类的构造器,并给对象属性赋值
- private Season(String seasonName,String seasonDesc){
-     this.seasonName = seasonName;
-     this.seasonDesc = seasonDesc;
+  //2.私化类的构造器,并给对象属性赋值
+  private Season(String seasonName,String seasonDesc){
+    this.seasonName = seasonName;
+    this.seasonDesc = seasonDesc;
  }
 
- //3.提供当前枚举类的多个对象：public static final的
- public static final Season SPRING = new Season("春天","春暖花开");
- public static final Season SUMMER = new Season("夏天","夏日炎炎");
- public static final Season AUTUMN = new Season("秋天","秋高气爽");
- public static final Season WINTER = new Season("冬天","冰天雪地");
+  //3.提供当前枚举类的多个对象：public static final的
+  public static final Season SPRING = new Season("春天","春暖花开");
+  public static final Season SUMMER = new Season("夏天","夏日炎炎");
+  public static final Season AUTUMN = new Season("秋天","秋高气爽");
+  public static final Season WINTER = new Season("冬天","冰天雪地");
 
- //4.其他诉求1：获取枚举类对象的属性
- public String getSeasonName() {
-     return seasonName;
- }
+  //4.其他诉求1：获取枚举类对象的属性
+  public String getSeasonName() {
+    return seasonName;
+  }
 
- public String getSeasonDesc() {
-     return seasonDesc;
- }
- //4.其他诉求1：提供toString()
- @Override
- public String toString() {
-     return "Season{" +
-             "seasonName='" + seasonName + '\'' +
-             ", seasonDesc='" + seasonDesc + '\'' +
-             '}';
- }
+  public String getSeasonDesc() {
+    return seasonDesc;
+  }
+  
+  //4.其他诉求1：提供toString()
+  @Override
+  public String toString() {
+    return "Season{" +
+           "seasonName='" + seasonName + '\'' +
+           ", seasonDesc='" + seasonDesc + '\'' +
+           '}';
+  }
 }
+````
 
-3. jdk 5.0 新增使用enum定义枚举类。步骤：
+
+
+
+
+#### 3. jdk 5.0 新增使用enum定义枚举类
+
+```
 //使用enum关键字枚举类
 enum Season1 {
-    //1.提供当前枚举类的对象，多个对象之间用","隔开，末尾对象";"结束
-    SPRING("春天","春暖花开"),
-    SUMMER("夏天","夏日炎炎"),
-    AUTUMN("秋天","秋高气爽"),
-    WINTER("冬天","冰天雪地");
+  //1.提供当前枚举类的对象，多个对象之间用","隔开，末尾对象";"结束
+  SPRING("春天","春暖花开"),
+  SUMMER("夏天","夏日炎炎"),
+  AUTUMN("秋天","秋高气爽"),
+  WINTER("冬天","冰天雪地");
 
-    //2.声明Season对象的属性:private final修饰
-    private final String seasonName;
-    private final String seasonDesc;
+  //2.声明Season对象的属性:private final修饰
+  private final String seasonName;
+  private final String seasonDesc;
 
-    //2.私化类的构造器,并给对象属性赋值
+  //2.私化类的构造器,并给对象属性赋值
 
-    private Season1(String seasonName,String seasonDesc){
-        this.seasonName = seasonName;
-        this.seasonDesc = seasonDesc;
-    }
+  private Season1(String seasonName,String seasonDesc){
+    this.seasonName = seasonName;
+    this.seasonDesc = seasonDesc;
+  }
 
-    //4.其他诉求1：获取枚举类对象的属性
-    public String getSeasonName() {
-        return seasonName;
-    }
+  //4.其他诉求1：获取枚举类对象的属性
+  public String getSeasonName() {
+    return seasonName;
+  }
 
-    public String getSeasonDesc() {
-        return seasonDesc;
-    }
-
+  public String getSeasonDesc() {
+     return seasonDesc;
+  }
 }
+```
 
 
-4. 使用enum定义枚举类之后，枚举类常用方法：（继承于java.lang.Enum类）
-Season1 summer = Season1.SUMMER;
-        //toString():返回枚举类对象的名称
-        System.out.println(summer.toString());
-
-//        System.out.println(Season1.class.getSuperclass());
-        System.out.println("****************");
-        //values():返回所的枚举类对象构成的数组
-        Season1[] values = Season1.values();
-        for(int i = 0;i < values.length;i++){
-            System.out.println(values[i]);
-        }
-        System.out.println("****************");
-        Thread.State[] values1 = Thread.State.values();
-        for (int i = 0; i < values1.length; i++) {
-            System.out.println(values1[i]);
-        }
-
-        //valueOf(String objName):返回枚举类中对象名是objName的对象。
-        Season1 winter = Season1.valueOf("WINTER");
-        //如果没objName的枚举类对象，则抛异常：IllegalArgumentException
-//        Season1 winter = Season1.valueOf("WINTER1");
-        System.out.println(winter);
 
 
-5. 使用enum定义枚举类之后，如何让枚举类对象分别实现接口：
+
+
+
+#### 4. 使用enum定义枚举类之后，枚举类常用方法
+
+（继承于java.lang.Enum类）
+
+````
+  Season1 summer = Season1.SUMMER;
+  //toString():返回枚举类对象的名称
+  System.out.println(summer.toString());
+
+  //System.out.println(Season1.class.getSuperclass());
+  System.out.println("****************");
+  //values():返回所的枚举类对象构成的数组
+  Season1[] values = Season1.values();
+  
+  for(int i = 0;i < values.length;i++){
+    System.out.println(values[i]);
+  }
+  System.out.println("****************");
+  Thread.State[] values1 = Thread.State.values();
+  for (int i = 0; i < values1.length; i++) {
+    System.out.println(values1[i]);
+  }
+
+  //valueOf(String objName):返回枚举类中对象名是objName的对象。
+  Season1 winter = Season1.valueOf("WINTER");
+  //如果没objName的枚举类对象，则抛异常：IllegalArgumentException
+
+  //Season1 winter = Season1.valueOf("WINTER1");
+  System.out.println(winter);
+````
+
+
+
+
+
+#### 5. 使用enum定义枚举类之后，如何让枚举类对象分别实现接口
+
+```
 interface Info{
-    void show();
+ void show();
 }
 
 //使用enum关键字枚举类
@@ -3141,3 +3167,517 @@ enum Season1 implements Info{
         }
     };
 }
+```
+
+
+
+
+
+
+
+
+
+### 10.2 注解的使用
+
+#### 1. 注解的理解
+
+![image-20210304200140280](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304200140280.png)
+
+#### 2. 注解的使用实例
+
+![image-20210304200229542](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304200229542.png)
+
+
+
+#### 3. 如何自定义注解
+
+参考@supperssWarnings 定义
+
+#### <img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304200423390.png" alt="image-20210304200423390" style="zoom:80%;" /><img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304200613900.png" alt="image-20210304200613900" style="zoom:80%;" />
+
+
+
+```
+@Inherited
+@Repeatable(MyAnnotations.class)
+@Retention(RetentionPolicy.RUNTIME)
+@Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE,TYPE_PARAMETER,TYPE_USE})
+public @interface MyAnnotation {
+
+    String value() default "hello";
+}
+```
+
+
+
+#### 4. 元注解：对现有的注解进行解释说明的注解
+
+![image-20210304200828321](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304200828321.png)
+
+
+
+
+
+#### 5. 如何获取注解信息：通过发射来进行获取，调用
+
+前提：要求此注解的元注解retention中声明了声明周期状态为runtime
+
+
+
+#### 6. JDK8 中注解的新特性：可重复注解、类型注解
+
+![image-20210304201037523](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210304201037523.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 11. 集合
+
+### 11.1 数组与集合
+
+#### 1. 集合与数组存储数据概述：
+
+集合、数组都是对多个数据进行存储操作的结构，简称Java容器。
+说明：此时的存储，主要指的是内存层面的存储，不涉及到持久化的存储（.txt,.jpg,.avi，数据库中)
+
+
+
+#### 2. 数组存储的特点：
+
+一旦初始化以后，其长度就确定了
+数组一旦定义好，其元素的类型也就确定了。我们也就只能操作指定类型的数据了
+
+比如：String[] arr;int[] arr1;Object[] arr2;
+
+
+
+#### 3. 数组存储的弊端：
+
+![image-20210305153956680](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305153956680.png)
+
+####  4. 集合存储的优点：
+
+解决数组存储数据方面的弊端
+
+
+
+
+
+
+
+
+
+### 11.2  collection接口
+
+#### 1. 单列集合框架结构
+
+|----Collection接口：单列集合，用来存储一个一个的对象
+
+​			|----List接口：存储序的、可重复的数据。  -->“动态”数组
+
+​						|----ArrayList、LinkedList、Vector
+
+
+​			|----Set接口：存储无序的、不可重复的数据   -->高中讲的“集合”
+
+​						|----HashSet、LinkedHashSet、TreeSet
+
+
+![image-20210305154148541](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305154148541.png)
+
+
+
+
+
+#### 2. Collection接口常用方法：
+
+add(Object obj),addAll(Collection coll),size(),isEmpty(),clear();
+contains(Object obj),containsAll(Collection coll),remove(Object obj),removeAll(Collection coll),retainsAll(Collection coll),equals(Object obj);
+hasCode(),toArray(),iterator();
+
+
+
+#### 3. Collection集合与数组间的转换
+
+![image-20210305154241644](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305154241644.png)
+
+
+
+#### 4.使用Collection集合存储对象，要求对象所属的类满足：
+
+向Collection接口的实现类的对象中添加数据obj时，要求obj所在类要重写equals().
+
+
+
+
+
+##### 5.本章节对大家的要求：
+
+层次一：选择合适的集合类去实现数据的保存，调用其内部的相关方法。
+
+层次二：不同的集合类底层的数据结构为何？如何实现数据的操作的：增删改查等。
+
+
+
+
+
+
+
+
+
+### 11.3 Iterator 接口与 foreach
+
+#### 1.遍历Collection的两种方式：
+
+① 使用迭代器Iterator  ② foreach循环（或增强for循环）
+
+#### 2.java.utils包下定义的迭代器接口：Iterator
+
+##### 2.1 说明：
+
+![image-20210305154437028](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305154437028.png)
+
+
+
+##### 2.2 作用：
+
+遍历集合Collectiton元素
+
+
+
+##### 2.3 如何获取实例：
+
+coll.iterator()返回一个迭代器实例
+
+
+
+##### 2.4 遍历的代码实现：
+
+```
+Iterator iterator = coll.iterator();
+//hasNext():判断是否还下一个元素
+while(iterator.hasNext()){
+    //next():①指针下移 ②将下移以后集合位置上的元素返回
+    System.out.println(iterator.next());
+}
+```
+
+
+
+##### 2.5图示说明：
+
+![](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305154510384.png)
+
+
+
+##### 2.6 remove()的使用：
+
+![image-20210305154703162](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305154703162.png)
+
+```
+ @Test
+ public void test3(){
+   Collection coll = new ArrayList();
+   coll.add(123);
+   coll.add(456);
+   coll.add(new Person("Jerry",20));
+   coll.add(new String("Tom"));
+   coll.add(false);
+
+   //删除集合中"Tom"
+   Iterator iterator = coll.iterator();
+   while (iterator.hasNext()){
+   
+     //iterator.remove();
+     Object obj = iterator.next();
+     if("Tom".equals(obj)){
+       iterator.remove();
+       //iterator.remove();
+      }
+  }
+  //遍历集合
+  iterator = coll.iterator();
+  while (iterator.hasNext()){
+    System.out.println(iterator.next());
+  }
+}
+```
+
+
+
+#### 3. jDK5.0新特性--增强for循环：(foreach循环)
+
+##### 1.遍历集合举例：
+
+```
+@Test
+public void test1(){
+    Collection coll = new ArrayList();
+    coll.add(123);
+    coll.add(456);
+    coll.add(new Person("Jerry",20));
+    coll.add(new String("Tom"));
+    coll.add(false);
+
+    //for(集合元素的类型 局部变量 : 集合对象)
+    
+    for(Object obj : coll){
+        System.out.println(obj);
+    }
+}
+```
+
+
+说明：内部仍然调用了迭代器。
+
+
+
+##### 2.遍历数组举例：
+
+```
+@Test
+public void test2(){
+    int[] arr = new int[]{1,2,3,4,5,6};
+    //for(数组元素的类型 局部变量 : 数组对象)
+    for(int i : arr){
+        System.out.println(i);
+    }
+}
+```
+
+
+
+
+
+### 11.4 collection 子接口：List接口
+
+#### 1. 存储的数据特点：
+
+存储序的、可重复的数据。
+
+#### 2. 常用方法：(记住)
+
+增：add(Object obj)
+删：remove(int index) / remove(Object obj)
+改：set(int index, Object ele)
+查：get(int index)
+插：add(int index, Object ele)
+长度：size()
+遍历：① Iterator迭代器方式
+  ② 增强for循环
+  ③ 普通的循环
+
+
+
+#### 3. 常用实现类：
+
+|----Collection接口：单列集合，用来存储一个一个的对象
+
+​		|----List接口：存储序的、可重复的数据。  -->“动态”数组,替换原的数组
+
+​				|----ArrayList：作为List接口的主要实现类；线程不安全的，效率高；底     											层使用Object[] elementData存储
+
+​				|----LinkedList：对于频繁的插入、删除操作，使用此类效率比ArrayList												高；底层使用双向链表存储
+
+​				|----Vector：作为List接口的古老实现类；线程安全的，效率低；底层使										用Object[] elementData存储
+
+
+
+#### 4. 源码分析(难点)
+
+##### 4.1 ArrayList的源码分析：![image-20210305155637896](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305155637896.png)
+
+
+
+##### 4.2 LinkedList的源码分析：
+
+![image-20210305155716484](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305155716484.png)
+
+
+
+##### 4.3 Vector的源码分析：
+
+jdk7和jdk8中通过Vector()构造器创建对象时，底层都创建了长度为10的数组。
+在扩容方面，默认扩容为原来的数组长度的2倍。
+
+
+
+
+
+#### 5. 存储的元素的要求：
+
+添加的对象，所在的类要重写equals()方法
+
+[面试题]
+
+面试题：ArrayList、LinkedList、Vector者的异同？
+
+同：三个类都是实现了List接口，存储数据的特点相同：存储序的、可重复的数据
+
+不同：见上（第3部分+第4部分）
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 11.5 collection子接口：Set接口
+
+#### 1. 存储的数据特点: 无序的、不可重复的元素
+
+![image-20210305155944419](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305155944419.png)
+
+
+
+#### 2. 元素添加过程：(以HashSet为例)
+
+![image-20210305160015042](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305160015042.png)
+
+
+
+#### 3. 常用方法
+
+Set接口中没额外定义新的方法，使用的都是Collection中声明过的方法。
+
+
+
+#### 4. 常用实现类：
+
+|----Collection接口：单列集合，用来存储一个一个的对象
+
+​			|----Set接口：存储无序的、不可重复的数据   -->高中讲的“集合”
+
+​						|----HashSet：作为Set接口的主要实现类；线程不安全的；可以存储													null值
+
+​						|----LinkedHashSet：作为HashSet的子类；遍历其内部数据时，可以																按照添加的顺序遍历
+
+​						在添加数据的同时，每个数据还维护了两个引用，记录此数据前一个						数据和后一个数据. 对于频繁的遍历操作，LinkedHashSet效率高于						HashSet.
+
+​						|----TreeSet：可以照添加对象的指定属性，进行排序。
+
+
+
+
+
+#### 5. 存储对象所在类的要求：
+
+![image-20210305160233647](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305160233647.png)
+
+
+
+#### 6. TreeSet的使用
+
+##### 6.1 使用说明:
+
+1.向TreeSet中添加的数据，要求是相同类的对象。
+2.两种排序方式：自然排序（实现Comparable接口 和 定制排序（Comparator）
+
+
+
+##### 6.2 常用的排序方式:
+
+````
+//方式一：自然排序
+@Test
+    public void test1(){
+        TreeSet set = new TreeSet();
+
+        //失败：不能添加不同类的对象
+
+//        set.add(123);
+//        set.add(456);
+//        set.add("AA");
+//        set.add(new User("Tom",12));
+
+            //举例一：
+
+//        set.add(34);
+//        set.add(-34);
+//        set.add(43);
+//        set.add(11);
+//        set.add(8);
+
+        //举例二：
+        set.add(new User("Tom",12));
+        set.add(new User("Jerry",32));
+        set.add(new User("Jim",2));
+        set.add(new User("Mike",65));
+        set.add(new User("Jack",33));
+        set.add(new User("Jack",56));
+
+
+        Iterator iterator = set.iterator();
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+    
+    }
+
+
+````
+
+````
+//方式二：定制排序
+    @Test
+    public void test2(){
+      Comparator com = new Comparator() {
+      //照年龄从小到大排列
+      @Override
+      public int compare(Object o1, Object o2) {
+        if(o1 instanceof User && o2 instanceof User){
+          User u1 = (User)o1;
+          User u2 = (User)o2;
+          return Integer.compare(u1.getAge(),u2.getAge());
+        }else{
+          throw new RuntimeException("输入的数据类型不匹配");
+        }
+     }
+   };
+
+        TreeSet set = new TreeSet(com);
+        set.add(new User("Tom",12));
+        set.add(new User("Jerry",32));
+        set.add(new User("Jim",2));
+        set.add(new User("Mike",65));
+        set.add(new User("Mary",33));
+        set.add(new User("Jack",33));
+        set.add(new User("Jack",56));
+
+
+        Iterator iterator = set.iterator();
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+    }
+````
+
+
+
+
+
+
+
+
+
+
+
+
+
