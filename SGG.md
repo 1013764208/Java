@@ -3579,9 +3579,9 @@ Set接口中没额外定义新的方法，使用的都是Collection中声明过�
 
 #### 5. 存储对象所在类的要求：
 
-![image-20210305160233647](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305160233647.png)
+![](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305160233647.png)
 
-
+比较hashcode，再比较内容
 
 #### 6. TreeSet的使用
 

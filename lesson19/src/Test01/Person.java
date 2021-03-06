@@ -4,7 +4,7 @@ package Test01;
  * @author HXS
  * @create 2021-03-04 15:13
  */
-public class Person {
+public class Person implements Comparable{
     private String name;
     private int age;
 
@@ -56,5 +56,14 @@ public class Person {
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Person) {
+            Person p1 = (Person)o;
+            return this.name.compareTo(p1.name);
+        }
+        throw new RuntimeException("数据类型不一致");
     }
 }
