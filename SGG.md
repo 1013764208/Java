@@ -217,7 +217,7 @@ System.out.println(arr4[1].length);//4
 
 #### 6.二维数组元素的默认初始化值
 
-![image-20210221151019103](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221151019103.png)
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210221151019103.png" alt="image-20210221151019103" style="zoom:50%;" />
 
 #### 7.二维数组的内存结构
 
@@ -3294,6 +3294,8 @@ public @interface MyAnnotation {
 ​						|----HashSet、LinkedHashSet、TreeSet
 
 
+
+
 ![image-20210305154148541](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210305154148541.png)
 
 
@@ -3675,7 +3677,100 @@ Set接口中没额外定义新的方法，使用的都是Collection中声明过�
 
 
 
+### 11.6 Map 接口
 
+双列集合框架：Map
+
+#### 1. 常用实现类结构
+
+![image-20210306191039286](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191039286.png)
+
+
+
+#### 2. 存储结构的理解：
+
+![image-20210306191110014](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191110014.png)
+
+![image-20210306191115695](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191115695.png)
+
+#### 3. 常用方法
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191146090.png" alt="image-20210306191146090" style="zoom: 80%;" />
+
+
+
+#### 4. 内存结构说明：（难点）
+
+##### 4.1 HashMap在jdk7中实现原理：
+
+![image-20210306191243526](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191243526.png)
+
+
+
+##### 4.2 HashMap在jdk8中相较于jdk7在底层实现方面的不同：
+
+![image-20210306191313103](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191313103.png)
+
+
+
+
+
+##### 4.3 HashMap底层典型属性的属性的说明：
+
+DEFAULT_INITIAL_CAPACITY : HashMap的默认容量，16
+DEFAULT_LOAD_FACTOR：HashMap的默认加载因子：0.75
+threshold：扩容的临界值，=容量*填充因子：16 * 0.75 => 12
+TREEIFY_THRESHOLD：Bucket中链表长度大于该默认值，转化为红黑树:8
+MIN_TREEIFY_CAPACITY：桶中的Node被树化时最小的hash表容量:64
+
+
+
+##### 4.4 LinkedHashMap的底层实现原理(了解)
+
+![image-20210306191601215](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191601215.png)
+
+
+
+#### 5. TreeMap的使用
+
+//向TreeMap中添加key-value，要求key必须是由同一个类创建的对象
+//因为要照key进行排序：自然排序 、定制排序
+
+
+
+#### 6. 使用Properties读取配置文件
+
+
+
+
+
+
+
+
+
+
+
+### 11.7 collections 工具类
+
+Collections工具类
+
+#### 1.作用：操作Collection和Map的工具类
+
+#### 2.常用方法：
+
+![image-20210306191805412](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191805412.png)
+
+![image-20210306191819043](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210306191819043.png)
+
+##### 说明：ArrayList和HashMap都是线程不安全的，如果程序要求线程安全，我们可以将ArrayList、HashMap转换为线程的。
+
+##### 使用synchronizedList(List list） 和 synchronizedMap(Map map）
+
+
+
+#### 3.面试题：
+
+面试题：Collection 和 Collections的区别？
 
 
 
