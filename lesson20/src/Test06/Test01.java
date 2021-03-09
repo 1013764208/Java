@@ -1,6 +1,5 @@
 package Test06;
 
-import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
 import org.junit.Test;
 import java.io.File;
 import java.io.FileReader;
