@@ -566,6 +566,10 @@ class A extends B{}
 
 
 
+
+
+
+
 ### 5.3 子类对象实例化全过程
 
 #### 1.从结果上看：继承性
@@ -3977,6 +3981,1460 @@ Collections工具类
 
 ​    ? extends Person：只允许泛型为Person及Person子类的引用调用  # <=  (无穷小，Person]
 ​    ? super Person： 只允许泛型为Person及Person父类的引用调用  # >=  [Person，无穷大]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 13. IO流
+
+### 13.1 File 类的使用
+
+#### 1. File类的理解
+
+![image-20210309160743381](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309160743381.png)
+
+
+
+#### 2. File的实例化
+
+##### 2.1 常用构造器
+
+File(String filePath)
+File(String parentPath,String childPath)
+File(File parentFile,String childPath)
+
+
+
+##### 2.2 路径的分类
+
+相对路径：相较于某个路径下，指明的路径。
+绝对路径：包含盘符在内的文件或文件目录的路径
+
+说明：
+IDEA中：如果大家开发使用JUnit中的单元测试方法测试，相对路径即为当前Module下。
+					如果大家使用main()测试，相对路径即为当前的Project下。
+
+Eclipse中：
+不管使用单元测试方法还是使用main()测试，相对路径都是当前的Project下。
+
+
+
+#### 2.3 路径分隔符
+
+windows和DOS系统默认使用“\”来表示
+UNIX和URL使用“/”来表示
+
+#### 3. File类的常用方法
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309160901478.png" alt="image-20210309160901478" style="zoom: 67%;" />
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309160957606.png" alt="image-20210309160957606" style="zoom: 67%;" />
+
+**注意事项：如果你创建文件或文件目录没有写盘符路径，那么默认在项目路径下**
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309161031858.png" alt="image-20210309161031858" style="zoom: 67%;" />
+
+
+
+
+
+
+
+
+
+
+
+### 13.2 IO 概述
+
+#### 1.流的分类
+
+1. 操作数据单位：字节流、字符流
+
+2. 数据的流向：输入流、输出流
+
+3. 流的角色：节点流、处理流
+
+![image-20210309161249739](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309161249739.png)
+
+
+
+#### 2. 流的体系结构
+
+#### ![image-20210309161306111](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309161306111.png)
+
+
+
+说明：红框对应的是IO流中的4个抽象基类。
+蓝框的流需要大家重点关注。
+
+
+
+#### 3.重点说明的几个流结构
+
+![image-20210309161334192](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309161334192.png)
+
+
+
+#### 4.输入、输出的标准化过程
+
+##### 4.1 输入过程
+
+①  创建File类的对象，指明读取的数据的来源。（要求此文件一定要存在）
+②  创建相应的输入流，将File类的对象作为参数，传入流的构造器中
+③  具体的读入过程：
+       创建相应的byte[] 或 char[]。
+④ 关闭流资源
+
+说明：程序中出现的异常需要使用try-catch-finally处理。
+
+
+
+##### 4.2 输出过程
+
+①  创建File类的对象，指明写出的数据的位置。（不要求此文件一定要存在）
+②  创建相应的输出流，将File类的对象作为参数，传入流的构造器中
+③  具体的写出过程：
+       write(char[]/byte[] buffer,0,len)
+④  关闭流资源
+
+说明：程序中出现的异常需要使用try-catch-finally处理。
+
+
+
+
+
+
+
+
+
+### 13.3 节点流
+
+#### 1.FileReader/FileWriter的使用：
+
+##### 1.1 FileReader的使用
+
+1. read()的理解：返回读入的一个字符。如果达到文件末尾，返回-1
+
+2. 异常的处理：为了保证流资源一定可以执行关闭操作。需要使用try-catch-finally处理
+
+3. 读入的文件一定要存在，否则就会报FileNotFoundException
+
+   
+
+```
+@Test
+public void testFileWriter() {
+    FileWriter fw = null;
+    try {
+        //1.提供File类的对象，指明写出到的文件
+        File file = new File("hello1.txt");
+
+        //2.提供FileWriter的对象，用于数据的写出
+        fw = new FileWriter(file,false);
+
+        //3.写出的操作
+        fw.write("I have a dream!\n");
+        fw.write("you need to have a dream!");
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        //4.流资源的关闭
+        if(fw != null){
+
+            try {
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+
+
+##### 1.2 FileWriter的使用
+
+![image-20210309162259088](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309162259088.png)
+
+
+
+##### 1.3 文本文件的复制：
+
+````
+    @Test
+    public void testFileReaderFileWriter() {
+        FileReader fr = null;
+        FileWriter fw = null;
+        try {
+            //1.创建File类的对象，指明读入和写出的文件
+            File srcFile = new File("hello.txt");
+            File destFile = new File("hello2.txt");
+
+            //不能使用字符流来处理图片等字节数据
+
+//            File srcFile = new File("爱情与友情.jpg");
+//            File destFile = new File("爱情与友情1.jpg");
+
+
+            //2.创建输入流和输出流的对象
+             fr = new FileReader(srcFile);
+            fw = new FileWriter(destFile);
+
+
+            //3.数据的读入和写出操作
+            char[] cbuf = new char[5];
+            int len;//记录每次读入到cbuf数组中的字符的个数
+            while((len = fr.read(cbuf)) != -1){
+                //每次写出len个字符
+                fw.write(cbuf,0,len);
+    
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.关闭流资源
+            //方式一：
+
+//            try {
+//                if(fw != null)
+//                    fw.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }finally{
+//                try {
+//                    if(fr != null)
+//                        fr.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+            //方式二：
+            try {
+                if(fw != null)
+                    fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if(fr != null)
+                    fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+````
+
+
+
+####    2.FileInputStream / FileOutputStream的使用：
+
+1. 对于文本文件(.txt,.java,.c,.cpp)，使用字符流处理
+
+2. 对于非文本文件(.jpg,.mp3,.mp4,.avi,.doc,.ppt,...)，使用字节流处理
+
+   // 实现对图片的复制操作
+
+````
+@Test
+public void testFileInputOutputStream()  {
+    FileInputStream fis = null;
+    FileOutputStream fos = null;
+    try {
+        //1.造文件
+        File srcFile = new File("爱情与友情.jpg");
+        File destFile = new File("爱情与友情2.jpg");
+
+        //2.造流
+        fis = new FileInputStream(srcFile);
+        fos = new FileOutputStream(destFile);
+
+        //3.复制的过程
+        byte[] buffer = new byte[5];
+        int len;
+        while((len = fis.read(buffer)) != -1){
+            fos.write(buffer,0,len);
+        }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if(fos != null){
+            //4.关闭流
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(fis != null){
+            try {
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+````
+
+
+
+**注意**
+相对路径在IDEA和Eclipse中使用的区别？
+
+IDEA:  如果使用单元测试方法，相对路径基于当前的Module的。
+			 如果使用main()测试，相对路径基于当前Project的。
+
+Eclipse:
+单元测试方法还是main(),相对路径都是基于当前Project的。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 13.4 缓存流
+
+#### 1. 缓冲流涉及到的类
+
+​	BufferedInputStream
+
+​    BufferedOutputStream
+
+​    BufferedReader
+
+​    BufferedWriter
+
+
+
+#### 2.作用：
+
+作用：提供流的读取、写入的速度
+提高读写速度的原因：内部提供了一个缓冲区。默认情况下是8kb
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309163034838.png" alt="image-20210309163034838" style="zoom:67%;" />
+
+
+
+
+
+#### 3.典型代码
+
+##### 3.1 使用BufferedInputStream和BufferedOutputStream:处理非文本文件
+
+
+
+
+       //实现文件复制的方法
+        public void copyFileWithBuffered(String srcPath,String destPath){
+            BufferedInputStream bis = null;
+            BufferedOutputStream bos = null;
+       try {
+            //1.造文件
+            File srcFile = new File(srcPath);
+            File destFile = new File(destPath);
+            //2.造流
+            //2.1 造节点流
+            FileInputStream fis = new FileInputStream((srcFile));
+            FileOutputStream fos = new FileOutputStream(destFile);
+            //2.2 造缓冲流
+            bis = new BufferedInputStream(fis);
+            bos = new BufferedOutputStream(fos);
+    
+            //3.复制的细节：读取、写入
+            byte[] buffer = new byte[1024];
+            int len;
+            while((len = bis.read(buffer)) != -1){
+                bos.write(buffer,0,len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.资源关闭
+            //要求：先关闭外层的流，再关闭内层的流
+            if(bos != null){
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+    
+            }
+            if(bis != null){
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+    
+            }
+        //说明：关闭外层流的同时，内层流也会自动的进行关闭。关于内层流的关闭，我们可以省略.
+
+
+##### 3.2 使用BufferedReader和BufferedWriter：处理文本文件
+
+````
+    @Test
+    public void testBufferedReaderBufferedWriter(){
+        BufferedReader br = null;
+        BufferedWriter bw = null;
+        try {
+            //创建文件和相应的流
+            br = new BufferedReader(new FileReader(new File("dbcp.txt")));
+            bw = new BufferedWriter(new FileWriter(new File("dbcp1.txt")));
+
+            //读写操作
+            //方式一：使用char[]数组
+
+//            char[] cbuf = new char[1024];
+//            int len;
+//            while((len = br.read(cbuf)) != -1){
+//                bw.write(cbuf,0,len);
+//                bw.flush();
+//            }
+
+            /
+            /方式二：使用String
+            String data;
+            while((data = br.readLine()) != null){
+                //方法一：
+
+//                bw.write(data + "\n");//data中不包含换行符
+                //方法二：
+                bw.write(data);//data中不包含换行符
+                bw.newLine();//提供换行的操作
+            }
+        } catch (IOException e) {
+        	e.printStackTrace();
+    	} finally {
+        //关闭资源
+        	if(bw != null){
+            try {
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(br != null){
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+````
+
+
+
+​	
+
+
+
+
+
+
+
+### 13.5 转换流
+
+#### 1. 转换流涉及到的类：属于字符流
+
+InputStreamReader：将一个字节的输入流转换为字符的输入流
+解码：字节、字节数组  --->字符数组、字符串
+
+OutputStreamWriter：将一个字符的输出流转换为字节的输出流
+编码：字符数组、字符串 ---> 字节、字节数组
+
+说明：编码决定了解码的方式
+
+
+
+#### 2. 作用
+
+提供字节流与字符流之间的转换
+
+#### 3. 图示
+
+![image-20210309163551899](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210309163551899.png)
+
+
+
+#### 4. 典型实现：
+
+```
+	@Test
+    public void test1() throws IOException {
+
+        FileInputStream fis = new FileInputStream("dbcp.txt");
+
+//      InputStreamReader isr = new InputStreamReader(fis);//使用系统默认的字符集
+        //参数2指明了字符集，具体使用哪个字符集，取决于文件dbcp.txt保存时使用的字符集
+        InputStreamReader isr = new InputStreamReader(fis,"UTF-8");//使用系统默认的字符集
+
+        char[] cbuf = new char[20];
+        int len;
+        while((len = isr.read(cbuf)) != -1){
+            String str = new String(cbuf,0,len);
+            System.out.print(str);
+        }
+    
+        isr.close(); 
+    }
+
+
+/*
+此时处理异常的话，仍然应该使用try-catch-finally
+
+综合使用InputStreamReader和OutputStreamWriter
+ */
+    @Test
+    public void test2() throws Exception {
+        //1.造文件、造流
+        File file1 = new File("dbcp.txt");
+        File file2 = new File("dbcp_gbk.txt");
+
+        FileInputStream fis = new FileInputStream(file1);
+        FileOutputStream fos = new FileOutputStream(file2);
+
+        InputStreamReader isr = new InputStreamReader(fis,"utf-8");
+        OutputStreamWriter osw = new OutputStreamWriter(fos,"gbk");
+
+        //2.读写过程
+        char[] cbuf = new char[20];
+        int len;
+        while((len = isr.read(cbuf)) != -1){
+            osw.write(cbuf,0,len);
+        }
+
+        //3.关闭资源
+        isr.close();
+        osw.close();
+    }
+```
+
+
+
+#### 5.说明
+
+//文件编码的方式（比如：GBK），决定了解析时使用的字符集（也只能是GBK）。
+
+
+
+#### 13.5.1 编码集
+
+##### 1. 常见的编码表
+
+![image-20210310144937552](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310144937552.png)
+
+
+
+##### 2. 对后面学习的启示
+
+客户端/浏览器端   <--->   后台 (java,go,python,node.js,php)   <---> 数据库 
+
+要求前前后后使用的字符集都要统一：UTF-8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 13.6 其他流的使用
+
+#### 1. 标准的输入输出流：
+
+System.in:标准的输入流，默认从键盘输入
+System.out:标准的输出流，默认从控制台输出
+
+修改默认的输入和输出行为：
+System类的setIn(InputStream is) / setOut(PrintStream ps)方式重新指定输入和输出的流。
+
+
+
+#### 2. 打印流：
+
+PrintStream 和PrintWriter
+说明： 提供了一系列重载的print()和println()方法，用于多种数据类型的输出
+			  System.out返回的是PrintStream的实例
+
+
+
+#### 3. 数据流：
+
+DataInputStream 和 DataOutputStream
+作用：用于读取或写出基本数据类型的变量或字符串
+
+
+
+```
+示例代码：
+/*
+练习：将内存中的字符串、基本数据类型的变量写出到文件中。
+
+注意：处理异常的话，仍然应该使用try-catch-finally.
+ */
+@Test
+public void test3() throws IOException {
+    //1.
+    DataOutputStream dos = new DataOutputStream(new FileOutputStream("data.txt"));
+    //2.
+    dos.writeUTF("刘建辰");
+    dos.flush();//刷新操作，将内存中的数据写入文件
+    dos.writeInt(23);
+    dos.flush();
+    dos.writeBoolean(true);
+    dos.flush();
+    //3.
+    dos.close();
+}
+
+
+/*
+将文件中存储的基本数据类型变量和字符串读取到内存中，保存在变量中。
+
+注意点：读取不同类型的数据的顺序要与当初写入文件时，保存的数据的顺序一致！
+
+ */
+@Test
+public void test4() throws IOException {
+    //1.
+    DataInputStream dis = new DataInputStream(new FileInputStream("data.txt"));
+    //2.
+    String name = dis.readUTF();
+    int age = dis.readInt();
+    boolean isMale = dis.readBoolean();
+
+    System.out.println("name = " + name);
+    System.out.println("age = " + age);
+    System.out.println("isMale = " + isMale);
+    
+    //3.
+    dis.close();
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+### 13.7 对象流
+
+#### 1. 对象流
+
+ObjectInputStream 和 ObjectOutputStream
+
+
+
+#### 2. 作用
+
+ObjectOutputStream: 内存中的对象--->存储中的文件、通过网络传输出去：序列化过程
+ObjectInputStream: 存储中的文件、通过网络接收过来 --->内存中的对象：反序列化过程
+
+#### 3.对象的序列化机制
+
+![image-20210310145339293](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310145339293.png)
+
+
+
+#### 4. 序列化代码实现
+
+```
+@Test
+public void testObjectOutputStream(){
+    ObjectOutputStream oos = null;
+
+    try {
+        //1.
+        oos = new ObjectOutputStream(new FileOutputStream("object.dat"));
+        //2.
+        oos.writeObject(new String("我爱北京天安门"));
+        oos.flush();//刷新操作
+    
+         oos.writeObject(new Person("王铭",23));
+        oos.flush();
+    
+        oos.writeObject(new Person("张学良",23,1001,new Account(5000)));
+        oos.flush();
+    
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if(oos != null){
+            //3.
+            try {
+                oos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    
+        }
+    }
+}
+```
+
+
+
+
+
+#### 5. 反序列化代码实现
+
+```
+@Test
+public void testObjectInputStream(){
+    ObjectInputStream ois = null;
+    try {
+        ois = new ObjectInputStream(new FileInputStream("object.dat"));
+
+        Object obj = ois.readObject();
+        String str = (String) obj;
+    
+        Person p = (Person) ois.readObject();
+        Person p1 = (Person) ois.readObject();
+    
+        System.out.println(str);
+        System.out.println(p);
+        System.out.println(p1);
+    
+    } catch (IOException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } finally {
+        if(ois != null){
+            try {
+                ois.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+
+
+
+
+#### 6. 实现序列化的对象所属的类需要满足
+
+#####   1. 需要实现接口：Serializable
+
+#####   2.当前类提供一个全局常量：serialVersionUID
+
+#####   3.除了当前Person类需要实现Serializable接口之外，还必须保证其内部所属性
+
+​      也必须是可序列化的。（默认情况下，基本数据类型可序列化）
+
+
+##### 补充：ObjectOutputStream和ObjectInputStream不能序列化static和transient修饰的成员变量
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 13.8 RandomAccessFile 
+
+#### 1. 随机存取文件流
+
+RandomAccessFile
+
+#### 2. 使用说明
+
+![image-20210310145726654](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310145726654.png)
+
+
+
+#### 3. 典型代码1
+
+```
+@Test
+public void test1() {
+
+    RandomAccessFile raf1 = null;
+    RandomAccessFile raf2 = null;
+    try {
+        //1.
+        raf1 = new RandomAccessFile(new File("爱情与友情.jpg"),"r");
+        raf2 = new RandomAccessFile(new File("爱情与友情1.jpg"),"rw");
+        //2.
+        byte[] buffer = new byte[1024];
+        int len;
+        while((len = raf1.read(buffer)) != -1){
+            raf2.write(buffer,0,len);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        //3.
+        if(raf1 != null){
+            try {
+                raf1.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } 
+        }
+        if(raf2 != null){
+            try {
+                raf2.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+
+
+
+
+**典型代码2：**
+
+使用RandomAccessFile实现数据的插入效果
+
+```
+@Test
+public void test3() throws IOException {
+
+    RandomAccessFile raf1 = new RandomAccessFile("hello.txt","rw");
+    
+    raf1.seek(3);//将指针调到角标为3的位置
+    //保存指针3后面的所数据到StringBuilder中
+    StringBuilder builder = new StringBuilder((int) new File("hello.txt").length());
+    byte[] buffer = new byte[20];
+    int len;
+    while((len = raf1.read(buffer)) != -1){
+        builder.append(new String(buffer,0,len)) ;
+    }
+    //调回指针，写入“xyz”
+    raf1.seek(3);
+    raf1.write("xyz".getBytes());
+    
+    //将StringBuilder中的数据写入到文件中
+    raf1.write(builder.toString().getBytes());
+    
+    raf1.close();
+    
+    //思考：将StringBuilder替换为ByteArrayOutputStream
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+### 13.9 Path / Paths / Files 
+
+#### 1. NIO的使用说明
+
+Java NIO (New IO，Non-Blocking IO)是从Java 1.4版本开始引入的一套新的IO API，可以替代标准的Java  IO AP。
+
+NIO与原来的IO同样的作用和目的，但是使用的方式完全不同，NIO支持面向缓冲区的(IO是面向流的)、基于
+通道的IO操作。
+
+**NIO将以更加高效的方式进行文件的读写操作。**
+随着 JDK 7 的发布，Java对NIO进行了极大的扩展，增强了对文件处理和文件系统特性的支持，以至于我们称他们为 NIO.2。
+
+#### 2. Path的使用 ---jdk7提供
+
+##### 2.1Path的说明
+
+Path替换原有的File类。
+
+
+
+##### 2.2如何实例化
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310150316481.png" alt="image-20210310150316481" style="zoom:67%;" />
+
+
+
+##### 2.3常用方法
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310150348164.png" alt="image-20210310150348164" style="zoom:80%;" />
+
+
+
+#### 3.Files工具类 ---jdk7提供
+
+##### 3.1作用
+
+操作文件或文件目录的工具类
+
+##### 3.2常用方法
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310150434351.png" alt="image-20210310150434351" style="zoom:80%;" />
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310150452264.png" alt="image-20210310150452264" style="zoom:80%;" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 14. 网络编程
+
+### 14.1 InetAddress 类的使用
+
+#### 1. 实现网络通信需要解决的两个问题
+
+​    1.如何准确地定位网络上一台或多台主机；定位主机上的特定的应用
+
+​     2.找到主机后如何可靠高效地进行数据传输
+
+
+
+#### 2. 网络通信的两个要素：
+
+​    1.对应问题一：IP和端口号
+
+​    2.对应问题二：提供网络通信协议：TCP/IP参考模型（应用层、传输层、网络层、物理+数据链路层）
+
+
+
+#### 3. 通信要素一：IP和端口号
+
+##### 1. IP的理解
+
+1. IP:唯一的标识 Internet 上的计算机（通信实体）
+
+2. 在Java中使用InetAddress类代表IP
+
+3. IP分类：IPv4 和 IPv6 ; 万维网 和 局域网
+
+4. 域名:   www.baidu.com   www.mi.com  www.sina.com  www.jd.com
+
+
+域名解析：域名容易记忆，当在连接网络时输入一个主机的域名后，域名服务器(DNS)负责将域名转化成IP地址，这样才能和主机建立连接。 -------域名解析
+
+5. 本地回路地址：127.0.0.1 对应着：localhost
+   
+
+
+
+#### 2.InetAddress类
+
+此类的一个对象就代表着一个具体的IP地址
+
+##### 2.1实例化
+
+getByName(String host) 、 getLocalHost()
+
+##### 2.2 常用方法
+
+getHostName() / getHostAddress()
+
+
+
+#### 3. 端口号：正在计算机上运行的进程。
+
+​      要求：不同的进程不同的端口号
+
+​      范围：被规定为一个 16 位的整数 0~65535。
+
+端口号与IP地址的组合得出一个网络套接字：Socket
+
+
+
+#### 4. 通信要素二：网络通信协议
+
+##### 1. 分型模型
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310151011057.png" alt="image-20210310151011057" style="zoom:80%;" />
+
+
+
+##### 2.TCP和UDP的区别
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310151041297.png" alt="image-20210310151041297" style="zoom:67%;" />
+
+
+
+##### 3.TCP三次握手和四次挥手
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310151101126.png" alt="image-20210310151101126" style="zoom:67%;" />![image-20210310151109772](C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310151109772.png)
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310151109772.png" alt="image-20210310151109772" style="zoom:67%;" />
+
+
+
+
+
+
+
+
+
+
+
+### 14.2 TCP 网络编程
+
+代码示例1：客户端发送信息给服务端，服务端将数据显示在控制台上
+
+```
+    //客户端
+    @Test
+    public void client()  {
+        Socket socket = null;
+        OutputStream os = null;
+        try {
+            //1.创建Socket对象，指明服务器端的ip和端口号
+            InetAddress inet = InetAddress.getByName("192.168.14.100");
+            socket = new Socket(inet,8899);
+            //2.获取一个输出流，用于输出数据
+            os = socket.getOutputStream();
+            //3.写出数据的操作
+            os.write("你好，我是客户端mm".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.资源的关闭
+            if(os != null){
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(socket != null){
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } 
+            }
+        }
+    }
+    //服务端
+    @Test
+    public void server()  {
+
+        ServerSocket ss = null;
+        Socket socket = null;
+        InputStream is = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            //1.创建服务器端的ServerSocket，指明自己的端口号
+            ss = new ServerSocket(8899);
+            //2.调用accept()表示接收来自于客户端的socket
+            socket = ss.accept();
+            //3.获取输入流
+            is = socket.getInputStream();
+
+            //不建议这样写，可能会乱码
+            
+//          byte[] buffer = new byte[1024];
+//          int len;
+//          while((len = is.read(buffer)) != -1){
+//              String str = new String(buffer,0,len);
+//              System.out.print(str);
+//          }
+            
+            //4.读取输入流中的数据
+            baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[5];
+            int len;
+            while((len = is.read(buffer)) != -1){
+                baos.write(buffer,0,len);
+            }
+
+            System.out.println(baos.toString());
+    
+            System.out.println("收到了来自于：" + socket.getInetAddress().getHostAddress() + "的数据");
+    
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(baos != null){
+                //5.关闭资源
+                try {
+                    baos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(is != null){
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(socket != null){
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ss != null){
+                try {
+                    ss.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+```
+
+
+
+
+
+
+
+代码示例2：客户端发送文件给服务端，服务端将文件保存在本地
+
+```
+@Test
+public void client() throws IOException {
+    //1.
+    Socket socket = new Socket(InetAddress.getByName("127.0.0.1"),9090);
+    //2.
+    OutputStream os = socket.getOutputStream();
+    //3.
+    FileInputStream fis = new FileInputStream(new File("beauty.jpg"));
+    //4.
+    byte[] buffer = new byte[1024];
+    int len;
+    while((len = fis.read(buffer)) != -1){
+        os.write(buffer,0,len);
+    }
+    //5.
+    fis.close();
+    os.close();
+    socket.close();
+}
+
+/*
+这里涉及到的异常，应该使用try-catch-finally处理
+ */
+@Test
+public void server() throws IOException {
+    //1.
+    ServerSocket ss = new ServerSocket(9090);
+    //2.
+    Socket socket = ss.accept();
+    //3.
+    InputStream is = socket.getInputStream();
+    //4.
+    FileOutputStream fos = new FileOutputStream(new File("beauty1.jpg"));
+    //5.
+    byte[] buffer = new byte[1024];
+    int len;
+    while((len = is.read(buffer)) != -1){
+        fos.write(buffer,0,len);
+    }
+    //6.
+    fos.close();
+    is.close();
+    socket.close();
+    ss.close();
+}
+```
+
+
+
+代码示例3：从客户端发送文件给服务端，服务端保存到本地。并返回“发送成功”给客户端。并关闭相应的连接。
+
+```
+@Test
+public void client() throws IOException {
+    //1.
+    Socket socket = new Socket(InetAddress.getByName("127.0.0.1"),9090);
+    //2.
+    OutputStream os = socket.getOutputStream();
+    //3.
+    FileInputStream fis = new FileInputStream(new File("beauty.jpg"));
+    //4.
+    byte[] buffer = new byte[1024];
+    int len;
+    while((len = fis.read(buffer)) != -1){
+        os.write(buffer,0,len);
+    }
+    //关闭数据的输出
+    socket.shutdownOutput();
+
+    //5.接收来自于服务器端的数据，并显示到控制台上
+    InputStream is = socket.getInputStream();
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    byte[] bufferr = new byte[20];
+    int len1;
+    while((len1 = is.read(buffer)) != -1){
+        baos.write(buffer,0,len1);
+    }
+    
+    System.out.println(baos.toString());
+    
+    //6.
+    fis.close();
+    os.close();
+    socket.close();
+    baos.close();
+}
+/*
+这里涉及到的异常，应该使用try-catch-finally处理
+ */
+@Test
+public void server() throws IOException {
+    //1.
+    ServerSocket ss = new ServerSocket(9090);
+    //2.
+    Socket socket = ss.accept();
+    //3.
+    InputStream is = socket.getInputStream();
+    //4.
+    FileOutputStream fos = new FileOutputStream(new File("beauty2.jpg"));
+    //5.
+    byte[] buffer = new byte[1024];
+    int len;
+    while((len = is.read(buffer)) != -1){
+        fos.write(buffer,0,len);
+    }
+
+    System.out.println("图片传输完成");
+    
+    //6.服务器端给予客户端反馈
+    OutputStream os = socket.getOutputStream();
+    os.write("你好，美女，照片我已收到，非常漂亮！".getBytes());
+    
+    //7.
+    fos.close();
+    is.close();
+    socket.close();
+    ss.close();
+    os.close();
+
+}
+
+/*
+这里涉及到的异常，应该使用try-catch-finally处理
+ */
+@Test
+public void server() throws IOException {
+    //1.
+    ServerSocket ss = new ServerSocket(9090);
+    //2.
+    Socket socket = ss.accept();
+    //3.
+    InputStream is = socket.getInputStream();
+    //4.
+    FileOutputStream fos = new FileOutputStream(new File("beauty2.jpg"));
+    //5.
+    byte[] buffer = new byte[1024];
+    int len;
+    while((len = is.read(buffer)) != -1){
+        fos.write(buffer,0,len);
+    }
+
+    System.out.println("图片传输完成");
+    
+    //6.服务器端给予客户端反馈
+    OutputStream os = socket.getOutputStream();
+    os.write("你好，美女，照片我已收到，非常漂亮！".getBytes());
+    
+    //7.
+    fos.close();
+    is.close();
+    socket.close();
+    ss.close();
+    os.close();
+}
+```
+
+
+
+### 14.3 UDP 网络编程
+
+代码示例
+
+```
+//发送端
+@Test
+public void sender() throws IOException {
+
+    DatagramSocket socket = new DatagramSocket();
+
+    String str = "我是UDP方式发送的导弹";
+    byte[] data = str.getBytes();
+    InetAddress inet = InetAddress.getLocalHost();
+    DatagramPacket packet = new DatagramPacket(data,0,data.length,inet,9090);
+    
+    socket.send(packet);
+    
+    socket.close();
+}
+
+
+//接收端
+@Test
+public void receiver() throws IOException {
+
+    DatagramSocket socket = new DatagramSocket(9090);
+    
+    byte[] buffer = new byte[100];
+    DatagramPacket packet = new DatagramPacket(buffer,0,buffer.length);
+    
+    socket.receive(packet);
+    
+    System.out.println(new String(packet.getData(),0,packet.getLength()));
+    
+    socket.close();
+}
+```
+
+
+
+
+
+
+
+
+
+### 14.4 URL 编程
+
+#### 1.URL(Uniform Resource Locator)的理解
+
+统一资源定位符，对应着互联网的某一资源地址
+
+#### 2.URL的5个基本结构
+
+​    http://localhost:8080/examples/beauty.jpg?username=Tom
+
+​    协议   主机名    端口号  资源地址           参数列表
+
+#### 3.如何实例化
+
+URL url = new URL("http://localhost:8080/examples/beauty.jpg?username=Tom");
+
+#### 4.常用方法
+
+<img src="C:\Users\10137\AppData\Roaming\Typora\typora-user-images\image-20210310152006595.png" alt="image-20210310152006595" style="zoom: 80%;" />
+
+
+
+#### 5.可以读取、下载对应的url资源
+
+```
+public static void main(String[] args) {
+
+    HttpURLConnection urlConnection = null;
+    InputStream is = null;
+    FileOutputStream fos = null;
+    try {
+        URL url = new URL("http://localhost:8080/examples/beauty.jpg");
+    
+        urlConnection = (HttpURLConnection) url.openConnection();
+    
+        urlConnection.connect();
+    
+        is = urlConnection.getInputStream();
+        fos = new FileOutputStream("day10\\beauty3.jpg");
+    
+        byte[] buffer = new byte[1024];
+        int len;
+        while((len = is.read(buffer)) != -1){
+            fos.write(buffer,0,len);
+        }
+    
+        System.out.println("下载完成");
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        //关闭资源
+        if(is != null){
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(fos != null){
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(urlConnection != null){
+            urlConnection.disconnect();
+        }
+    }
+}
+```
+
+
 
 
 
