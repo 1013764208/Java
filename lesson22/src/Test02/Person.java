@@ -45,5 +45,9 @@ public class Person extends Creature<String> implements Comparable<String>,MyInt
     public int compareTo(String o) {
         return 0;
     }
+
+    private static void showDesc(){
+        System.out.println("我是静态方法");
+    }
 }
 
