@@ -1,6 +1,7 @@
 package Test01;
 import org.junit.Test;
 
+import java.lang.annotation.ElementType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -74,4 +75,62 @@ public class Test01 {
     // 使用时候会使用：反射的方法. 反射的特征：动态性
     // 疑问: 反射机制与面向对象中的封装性是不是矛盾的？如何看待两个技术
     // 不矛盾，
+
+    /*
+        关于 java.lang.Class 类的理解
+        1. 类的加载过程：
+           程序经过javac.exe命令以后，会生成一个或多个字节码文件（.class结尾）
+           接着我们使用java.exe 命名对某个字节码文件进行解释运行. 相当于将某个字节码文件加载到内存中，此过程成为类的加载
+           加载到到内存中的类，我们就称为运行时类，此运行时类，就作为Class的一个实例
+
+        2. 换句话说，Class的实例对应着一个运行时类
+        3. 加载到内存中的运行时类，会缓存一定的时间，在此时间之内，我们可以通过不同的方式来获取运行时类
+
+
+     */
+
+    // 万事万物皆对象？
+
+    // 获取Class的实例方式，需要掌握
+    @Test
+    public void test3() throws ClassNotFoundException {
+        // 方式 1：调用运行时类的属性: .class
+        Class<Person> personClass = Person.class;
+        System.out.println(personClass);    // class Test01.Person
+
+        // 方式 2：通过运行时类的对象，调用getClass()
+        Person p1 = new Person();
+        Class<? extends Person> p1Class = p1.getClass();
+
+        // 方式 3：调用Class的静态方法：forName(String classPath)    （常用）
+        Class<?> forName = Class.forName("Test01.Person");
+        System.out.println(forName);
+
+        // 方式 4：使用类的加载类：ClassLoader （了解）
+        ClassLoader classLoader = Test01.class.getClassLoader();
+        Class<?> aClass = classLoader.loadClass("Test01.Person");
+        System.out.println(aClass);     // class Test01.Person
+    }
+
+    // Class 实例可以是那些结构的说明
+    @Test
+    public void test4(){
+        Class c1 = Object.class;
+        Class c2 = Comparable.class;
+        Class c3 = String[].class;
+        Class c4 = int[][].class;
+        Class c5 = ElementType.class;
+        Class c6 = Override.class;
+        Class c7 = int.class;
+        Class c8 = void.class;
+        Class c9 = Class.class;
+
+        int[] a = new int[10];
+        int[] b = new int[100];
+        Class c10 = a.getClass();
+        Class c11 = b.getClass();
+
+        // 只要元素类型与维度一样，就是同一个Class
+        System.out.println(c10 == c11);
+    }
 }
